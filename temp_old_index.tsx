@@ -18,7 +18,6 @@ import {
   Star,
   Instagram,
   Quote,
-  User,
 } from "lucide-react";
 
 import heroOrganic from "@/assets/hero-organic.jpg";
