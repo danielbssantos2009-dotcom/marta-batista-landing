@@ -757,7 +757,7 @@ function Testimonials() {
           </Reveal>
         </div>
 
-        <div className="relative mt-20 flex flex-col items-center justify-center gap-8 lg:-mx-10 lg:flex-row lg:gap-0">
+        <div className="relative mt-24 flex flex-col items-center justify-center gap-10 lg:-mx-16 lg:flex-row lg:gap-0">
           {items.map((t, i) => {
             const isCenter = i === 1;
 
@@ -765,69 +765,78 @@ function Testimonials() {
               <Reveal
                 key={t.name}
                 delay={i * 120}
-                className={`w-full transition-all duration-700 lg:w-[40%] ${isCenter ? "z-10 lg:scale-105" : "z-0 lg:scale-[0.88] lg:opacity-75"}`}
+                className={`w-full transition-all duration-700 lg:w-[42%] ${isCenter ? "z-20 lg:scale-[1.08]" : "z-0 lg:scale-[0.85] lg:opacity-75"}`}
               >
                 <div
-                  className={`group relative flex h-full min-h-[420px] flex-col rounded-[32px] p-8 transition-all duration-700 hover:scale-[1.02] ${
+                  className={`group relative flex h-full min-h-[420px] flex-col justify-between rounded-[32px] p-6 sm:p-8 transition-all duration-700 hover:scale-[1.02] ${
                     isCenter
-                      ? "bg-[color:var(--moss)] text-white shadow-[0_30px_60px_-15px_color-mix(in_oklab,var(--moss)_60%,transparent)]"
-                      : "glass border-y border-white/60 bg-white/60 text-[color:var(--moss)] shadow-glass hover:opacity-100"
+                      ? "bg-gradient-to-br from-[#3b5e45] via-[color:var(--moss)] to-[#152419] text-white shadow-[0_40px_80px_-20px_color-mix(in_oklab,var(--moss)_80%,transparent)] border border-white/15"
+                      : "bg-white/70 backdrop-blur-2xl border border-white text-[color:var(--moss)] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] hover:opacity-100 hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.08)]"
                   }`}
                 >
-                  {/* Top Icon Badge */}
-                  <div
-                    className={`flex h-16 w-16 items-center justify-center rounded-full shadow-md ${
-                      isCenter ? "bg-white text-[color:var(--moss)]" : "bg-[color:var(--moss)] text-cream"
-                    }`}
-                  >
-                    <User className="h-7 w-7" strokeWidth={1.8} />
-                  </div>
+                  {/* Glare / Lighting for Center Card */}
+                  {isCenter && (
+                    <>
+                      <div className="absolute inset-0 rounded-[32px] bg-gradient-to-bl from-white/30 via-white/0 to-transparent pointer-events-none" />
+                      <div className="absolute -top-10 -right-10 h-64 w-64 bg-white/10 blur-[60px] rounded-full pointer-events-none" />
+                      <div className="absolute bottom-0 left-0 h-40 w-40 bg-[color:var(--leaf)]/20 blur-[50px] rounded-full pointer-events-none" />
+                    </>
+                  )}
 
-                  {/* Title & Text */}
-                  <div className="mt-8">
-                    <h3
-                      className={`font-display text-4xl leading-tight tracking-tight ${
-                        isCenter ? "text-white" : "text-[color:var(--moss)]"
-                      }`}
-                    >
-                      {t.name}
-                    </h3>
-                    <p
-                      className={`mt-5 text-[15px] leading-relaxed ${
-                        isCenter ? "text-white/80" : "text-[color:var(--moss)]/75"
-                      }`}
-                    >
-                      {t.text}
-                    </p>
-                  </div>
-
-                  {/* Footer */}
-                  <div
-                    className={`mt-auto pt-8 flex items-center justify-between border-t ${
-                      isCenter ? "border-white/10" : "border-[color:var(--moss)]/10"
-                    }`}
-                  >
-                    {/* Left pill */}
+                  <div className="relative z-10">
+                    {/* Top Icon Badge */}
                     <div
-                      className={`flex items-center gap-2 rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-widest ${
-                        isCenter
-                          ? "border-white/20 bg-white/10 text-white"
-                          : "border-[color:var(--moss)]/10 bg-white/50 text-[color:var(--moss)]/80"
+                      className={`flex h-16 w-16 items-center justify-center rounded-full shadow-lg transition-transform duration-500 group-hover:scale-110 ${
+                        isCenter ? "bg-white text-[color:var(--moss)] shadow-[0_15px_30px_-10px_rgba(255,255,255,0.4)]" : "bg-[color:var(--gradient-cta)] text-cream shadow-[0_10px_20px_-10px_color-mix(in_oklab,var(--leaf)_60%,transparent)]"
                       }`}
                     >
-                      <User className="h-3 w-3" strokeWidth={2.5} />
-                      {t.role}
+                      <User className="h-7 w-7" strokeWidth={1.8} />
                     </div>
 
-                    {/* Right button/stars */}
-                    <div
-                      className={`flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition-transform hover:scale-105 ${
-                        isCenter
-                          ? "bg-white text-[color:var(--moss)]"
-                          : "bg-[color:var(--moss)] text-white"
-                      }`}
-                    >
-                      5.0 <Star className="h-4 w-4 fill-current" />
+                    {/* Title & Text */}
+                    <div className="mt-8">
+                      <h3
+                        className={`font-display text-4xl leading-tight tracking-tight ${
+                          isCenter ? "text-white drop-shadow-sm" : "text-[color:var(--moss)]"
+                        }`}
+                      >
+                        {t.name}
+                      </h3>
+                      <p
+                        className={`mt-4 text-[15px] leading-relaxed ${
+                          isCenter ? "text-white/85" : "text-[color:var(--moss)]/70"
+                        }`}
+                      >
+                        &ldquo;{t.text}&rdquo;
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Footer Elevated Island */}
+                  <div
+                    className="relative z-10 mt-10 flex items-center justify-between rounded-[20px] bg-white p-3 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.12)] border border-[color:var(--moss)]/5"
+                  >
+                    {/* Left pill */}
+                    <div className="flex items-center gap-2 rounded-xl border border-[color:var(--moss)]/10 bg-[color:var(--moss)]/5 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-[color:var(--moss)]">
+                      <User className="h-3.5 w-3.5 text-[color:var(--leaf)]" strokeWidth={2.5} />
+                      <span className="truncate max-w-[120px] sm:max-w-none">{t.role}</span>
+                    </div>
+
+                    {/* Right action */}
+                    <div className="flex items-center gap-2">
+                      <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--moss)]/10 bg-[color:var(--moss)]/5 text-[color:var(--moss)]">
+                        <Quote className="h-4 w-4" strokeWidth={2} />
+                      </div>
+                      <div
+                        className={`flex shrink-0 items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold shadow-sm transition-transform hover:-translate-y-0.5 ${
+                          isCenter
+                            ? "bg-[color:var(--moss)] text-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--moss)_60%,transparent)]"
+                            : "bg-white text-[color:var(--moss)] border border-[color:var(--moss)]/15"
+                        }`}
+                      >
+                        <Star className="h-4 w-4 fill-[color:var(--gold)] text-[color:var(--gold)]" />
+                        5.0
+                      </div>
                     </div>
                   </div>
                 </div>
