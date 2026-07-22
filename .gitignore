@@ -8,3 +8,5 @@ dist
 .vinxi
 .coverage
 build
+
+.vercel
