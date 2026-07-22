@@ -712,7 +712,17 @@ function Process() {
                 </div>
                 <h3 className="relative mt-4 font-display text-xl text-[color:var(--moss)]">{s.title}</h3>
                 <p className="relative mt-2 text-sm leading-relaxed text-[color:var(--moss)]/70">{s.text}</p>
- function Testimonials() {
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ================= DEPOIMENTOS ================= */
+function Testimonials() {
   const items = [
     {
       name: "Camila R.",
@@ -846,16 +856,6 @@ function Process() {
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}           </div>
-                  </div>
-                </div>
-              </Reveal>
             );
           })}
         </div>
