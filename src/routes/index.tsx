@@ -177,8 +177,29 @@ function Hero() {
     <section className="relative overflow-hidden pt-6" style={{ background: "var(--gradient-hero)" }}>
       <Blobs />
 
+      {/* Decorative floating background elements */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <Reveal delay={400}>
+          <img
+            src={glassLeaf}
+            alt=""
+            className="absolute left-[5%] top-[15%] h-24 w-24 -rotate-12 opacity-50 float-slow drop-shadow-[0_20px_40px_rgba(60,100,60,0.15)] sm:h-40 sm:w-40 lg:left-[12%] lg:top-[20%]"
+          />
+        </Reveal>
+        <Reveal delay={600}>
+          <img
+            src={glassLeaf}
+            alt=""
+            className="absolute right-[2%] top-[40%] h-20 w-20 scale-x-[-1] rotate-45 opacity-40 float-slower drop-shadow-[0_20px_40px_rgba(60,100,60,0.15)] sm:h-32 sm:w-32 lg:right-[10%] lg:top-[45%]"
+          />
+        </Reveal>
+        {/* Soft abstract orbs */}
+        <div className="absolute bottom-[10%] left-[15%] h-64 w-64 rounded-full opacity-40 float-slow" style={{ background: "radial-gradient(circle, color-mix(in oklab, var(--sage) 80%, transparent), transparent 70%)", filter: "blur(40px)" }} />
+        <div className="absolute right-[15%] top-[10%] h-80 w-80 rounded-full opacity-30 float-slower" style={{ background: "radial-gradient(circle, color-mix(in oklab, var(--leaf) 50%, transparent), transparent 70%)", filter: "blur(50px)" }} />
+      </div>
+
       {/* Hero content */}
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center px-5 pb-24 pt-24 sm:px-8 lg:pb-32 lg:pt-32">
+      <div className="relative z-10 mx-auto flex min-h-[92vh] max-w-5xl flex-col items-center justify-center text-center px-5 py-24 sm:px-8">
         <Reveal>
           <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs uppercase tracking-[0.2em] text-[color:var(--moss)]">
             <Sparkles className="h-3.5 w-3.5" />
@@ -186,7 +207,7 @@ function Hero() {
           </div>
         </Reveal>
         <Reveal delay={120}>
-          <h1 className="mt-6 font-display text-[44px] leading-[1.02] tracking-tight text-[color:var(--moss)] text-balance sm:text-[64px] lg:text-[76px]">
+          <h1 className="mt-8 font-display text-[52px] leading-[0.95] tracking-tight text-[color:var(--moss)] text-balance sm:text-[76px] lg:text-[104px]">
             Uma nutrição que{" "}
             <span className="relative inline-block">
               <span
@@ -219,13 +240,13 @@ function Hero() {
           </h1>
         </Reveal>
         <Reveal delay={220}>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[color:var(--moss)]/75 sm:text-xl">
+          <p className="mt-8 max-w-3xl text-xl leading-relaxed text-[color:var(--moss)]/75 sm:text-2xl">
             Um acompanhamento nutricional humano, científico e sob medida —
             construído para transformar sua rotina, seu corpo e sua relação com a comida.
           </p>
         </Reveal>
         <Reveal delay={320}>
-          <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row">
+          <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-8">
             <CTAButton large>
               <MessageCircle className="h-5 w-5" />
               Agendar consulta
@@ -238,8 +259,8 @@ function Hero() {
         </Reveal>
 
         <Reveal delay={420}>
-          <div className="mt-12 flex flex-col items-center justify-center gap-4 text-sm text-[color:var(--moss)]/70 sm:flex-row sm:gap-6">
-            <div className="flex items-center gap-2">
+          <div className="mt-16 flex flex-col items-center justify-center gap-4 text-sm text-[color:var(--moss)]/70 sm:flex-row sm:gap-6">
+            <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 {[0, 1, 2, 3].map((i) => (
                   <div
