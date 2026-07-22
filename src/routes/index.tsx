@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import {
   Leaf,
   Sparkles,
@@ -139,47 +139,58 @@ function Blobs() {
   );
 }
 
+/* ================= HEADER ================= */
+function Header() {
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 80);
+  });
+
+  return (
+    <motion.header
+      className={`fixed left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 items-center justify-between px-5 transition-all duration-500 sm:px-8 ${
+        isScrolled 
+          ? "top-4 py-3 glass shadow-glass rounded-full" 
+          : "top-6 py-4 bg-transparent rounded-none"
+      }`}
+    >
+      <div className="flex items-center gap-2.5">
+        <div className="leading-tight">
+          <div className="font-display text-[22px] font-medium sm:text-[26px] text-[color:var(--moss)]">Marta Batista</div>
+          <div className="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-[color:var(--leaf)]/80">
+            Nutricionista
+          </div>
+        </div>
+      </div>
+      <div className="hidden items-center gap-8 text-sm text-[color:var(--moss)]/80 md:flex">
+        <a href="#sobre" className="hover:text-[color:var(--leaf)] transition-colors">Sobre</a>
+        <a href="#abordagem" className="hover:text-[color:var(--leaf)] transition-colors">Abordagem</a>
+        <a href="#especialidades" className="hover:text-[color:var(--leaf)] transition-colors">Especialidades</a>
+        <a href="#processo" className="hover:text-[color:var(--leaf)] transition-colors">Processo</a>
+      </div>
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="hidden items-center gap-2 rounded-full glass px-5 py-2.5 text-sm text-[color:var(--moss)] transition-all hover:-translate-y-0.5 hover:shadow-glass sm:inline-flex"
+      >
+        <MessageCircle className="h-4 w-4" />
+        Agendar
+      </a>
+    </motion.header>
+  );
+}
+
 /* ================= HERO ================= */
 function Hero() {
   return (
     <section className="relative overflow-hidden pt-6" style={{ background: "var(--gradient-hero)" }}>
       <Blobs />
 
-      {/* Nav */}
-      <nav className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8">
-        <div className="flex items-center gap-2.5">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-full text-cream"
-            style={{ background: "var(--gradient-cta)" }}
-          >
-            <Leaf className="h-5 w-5" strokeWidth={1.8} />
-          </div>
-          <div className="leading-tight">
-            <div className="font-display text-[17px] text-[color:var(--moss)]">Marta Batista</div>
-            <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--leaf)]/70">
-              Nutricionista
-            </div>
-          </div>
-        </div>
-        <div className="hidden items-center gap-8 text-sm text-[color:var(--moss)]/80 md:flex">
-          <a href="#sobre" className="hover:text-[color:var(--leaf)] transition-colors">Sobre</a>
-          <a href="#abordagem" className="hover:text-[color:var(--leaf)] transition-colors">Abordagem</a>
-          <a href="#especialidades" className="hover:text-[color:var(--leaf)] transition-colors">Especialidades</a>
-          <a href="#processo" className="hover:text-[color:var(--leaf)] transition-colors">Processo</a>
-        </div>
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="hidden items-center gap-2 rounded-full glass px-5 py-2.5 text-sm text-[color:var(--moss)] transition-all hover:-translate-y-0.5 sm:inline-flex"
-        >
-          <MessageCircle className="h-4 w-4" />
-          Agendar
-        </a>
-      </nav>
-
       {/* Hero content */}
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-24 pt-10 sm:px-8 lg:grid-cols-12 lg:pb-32 lg:pt-16">
+      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-24 pt-24 sm:px-8 lg:grid-cols-12 lg:pb-32 lg:pt-32">
         <div className="lg:col-span-7">
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs uppercase tracking-[0.2em] text-[color:var(--moss)]">
@@ -916,27 +927,11 @@ function Footer() {
   );
 }
 
-/* ================= FLOATING WHATSAPP ================= */
-function FloatingWA() {
-  return (
-    <a
-      href={WHATSAPP_URL}
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Falar no WhatsApp"
-      className="group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-[0_20px_50px_-10px_color-mix(in_oklab,var(--leaf)_60%,transparent)] transition-all duration-500 hover:-translate-y-1 hover:scale-105 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
-      style={{ background: "var(--gradient-cta)" }}
-    >
-      <span className="absolute inset-0 rounded-full breathe opacity-40" style={{ background: "var(--gradient-cta)", filter: "blur(14px)" }} aria-hidden />
-      <MessageCircle className="relative h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.8} />
-    </a>
-  );
-}
-
 /* ================= PAGE ================= */
 function LandingPage() {
   return (
     <main className="relative">
+      <Header />
       <Hero />
       <About />
       <Approach />
@@ -946,7 +941,6 @@ function LandingPage() {
       <Testimonials />
       <FinalCTA />
       <Footer />
-      <FloatingWA />
     </main>
   );
 }
