@@ -742,77 +742,71 @@ function Testimonials() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-[#F8FAF7] py-32 font-sans">
+    <section className="relative overflow-hidden bg-[#F4F7F5] py-32 font-sans">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
         
-        {/* HEADER */}
-        <div className="mx-auto max-w-2xl text-center">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#0E5A2E]">
-              <span className="h-px w-8 bg-[#0E5A2E]/30" /> Depoimentos
-              <span className="h-px w-8 bg-[#0E5A2E]/30" />
-            </div>
-          </Reveal>
-          <Reveal delay={80}>
-            <h2 className="mt-6 font-display text-[2.75rem] leading-[1.1] tracking-tight text-[#0E5A2E] sm:text-5xl text-balance">
-              Histórias reais de quem <em className="font-normal text-[#5DAA72] italic">voltou a respirar leveza</em>.
-            </h2>
-          </Reveal>
-        </div>
+        {/* CARDS CAROUSEL REBUILT FROM SCRATCH */}
+        <div className="relative mt-8 flex flex-col items-center justify-center gap-8 lg:-mx-12 lg:flex-row lg:gap-0">
+          
+          {/* Ambient Background Glow for 3D depth */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#a3c9ae]/20 blur-[120px]" />
 
-        {/* CARDS CAROUSEL */}
-        <div className="relative mt-24 flex flex-col items-center justify-center gap-10 lg:-mx-12 lg:flex-row lg:gap-0">
           {items.map((t, i) => {
             const isCenter = i === 1;
 
             return (
               <div
                 key={t.name}
-                className={`w-full transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] lg:w-[38%] ${
-                  isCenter ? "z-20 lg:scale-[1.15]" : "z-0 lg:scale-[0.9] lg:opacity-95"
+                className={`relative w-full transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] lg:w-[37%] ${
+                  isCenter ? "z-20 lg:scale-[1.12]" : "z-10 lg:scale-[0.88] lg:opacity-90"
                 }`}
               >
+                {/* 3D CARD BODY */}
                 <div
-                  className={`group relative flex h-full min-h-[440px] flex-col justify-between rounded-[40px] p-8 sm:p-10 transition-all duration-700 ${
+                  className={`group relative flex h-full min-h-[480px] flex-col justify-between rounded-[48px] p-8 sm:p-10 transition-all duration-700 ${
                     isCenter
-                      ? "bg-gradient-to-br from-[#c5dec9] via-[#8bb999] to-[#4c8a62] shadow-[0_40px_100px_-20px_rgba(45,122,72,0.4),inset_0_2px_5px_rgba(255,255,255,0.9),inset_0_-2px_5px_rgba(0,0,0,0.05)] border border-white/60 backdrop-blur-2xl"
-                      : "bg-[#FFFFFF] shadow-[0_15px_50px_-15px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,1)] border border-[#EEF2EF] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.06)]"
+                      ? "bg-gradient-to-br from-[#ffffff]/70 via-[#e0eedf]/60 to-[#a3c9ae]/50 border-[2px] border-white/80 shadow-[0_50px_100px_-20px_rgba(20,80,40,0.3),inset_0_2px_15px_rgba(255,255,255,1),inset_0_-2px_10px_rgba(0,0,0,0.02)] backdrop-blur-[40px]"
+                      : "bg-[#ffffff]/50 border-[2px] border-white/60 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05),inset_0_2px_10px_rgba(255,255,255,0.8)] backdrop-blur-[30px]"
                   }`}
                 >
-                  {/* GLARE EFFECT FOR CENTER CARD */}
-                  {isCenter && (
-                    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[40px]">
-                      {/* Sharp diagonal glass glare exactly like screenshot-3 */}
-                      <div className="absolute -top-[30%] left-[35%] h-[160%] w-[150%] origin-top-left rotate-[22deg] bg-gradient-to-r from-white/70 via-white/10 to-transparent blur-[1px]" />
-                      {/* Edge highlight */}
-                      <div className="absolute inset-0 rounded-[40px] ring-1 ring-inset ring-white/30" />
-                    </div>
-                  )}
+                  {/* VOLUMETRIC GLOW & LIGHTING */}
+                  <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[48px]">
+                    {/* Top right soft volumetric glare (replaces the old sharp glare) */}
+                    {isCenter && (
+                      <div className="absolute -right-[15%] -top-[15%] h-[70%] w-[70%] rounded-full bg-white/80 blur-[70px]" />
+                    )}
+                    {/* Side cards get a softer glare */}
+                    {!isCenter && (
+                      <div className="absolute -right-[10%] -top-[10%] h-[50%] w-[50%] rounded-full bg-white/50 blur-[50px]" />
+                    )}
+                    {/* Soft edge rim light */}
+                    <div className="absolute inset-0 rounded-[48px] ring-1 ring-inset ring-white/40 mix-blend-overlay" />
+                  </div>
 
-                  <div className="relative z-10">
-                    {/* TOP ICON BADGE */}
+                  <div className="relative z-10 flex flex-col">
+                    {/* TOP AVATAR BADGE */}
                     <div
-                      className={`flex h-[72px] w-[72px] items-center justify-center rounded-full transition-transform duration-500 group-hover:scale-105 ${
-                        isCenter
-                          ? "bg-white shadow-[0_15px_35px_-5px_rgba(0,0,0,0.12)] text-[#0E5A2E]"
-                          : "bg-white border border-[#EEF2EF] shadow-[0_4px_15px_-5px_rgba(0,0,0,0.03)] text-[#0E5A2E]"
+                      className={`flex items-center justify-center rounded-full bg-white transition-transform duration-500 group-hover:scale-105 ${
+                        isCenter 
+                          ? "h-[80px] w-[80px] shadow-[0_15px_35px_-5px_rgba(0,0,0,0.08)]" 
+                          : "h-[72px] w-[72px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)]"
                       }`}
                     >
-                      <User className="h-7 w-7" strokeWidth={1.5} />
+                      <User className={`text-[#0E5A2E] ${isCenter ? "h-8 w-8" : "h-7 w-7"}`} strokeWidth={1.5} />
                     </div>
 
-                    {/* TITLE & TEXT */}
-                    <div className="mt-10">
+                    {/* TYPOGRAPHY */}
+                    <div className="mt-12">
                       <h3
-                        className={`font-display text-[2.5rem] leading-[1.1] tracking-tight text-[#0E5A2E] ${
-                          isCenter ? "drop-shadow-sm" : ""
+                        className={`font-display tracking-tight text-[#0E5A2E] ${
+                          isCenter ? "text-[2.75rem] leading-[1.1] drop-shadow-sm" : "text-[2.25rem] leading-[1.1]"
                         }`}
                       >
                         {t.name}
                       </h3>
                       <p
-                        className={`mt-4 text-[15px] leading-[1.65] text-[#0E5A2E] ${
-                          isCenter ? "opacity-90" : "opacity-60"
+                        className={`mt-6 text-[16px] leading-[1.7] text-[#0E5A2E] font-medium ${
+                          isCenter ? "opacity-95" : "opacity-75"
                         }`}
                       >
                         {t.text}
@@ -822,34 +816,34 @@ function Testimonials() {
 
                   {/* FOOTER CAPSULE */}
                   <div
-                    className={`relative z-10 mt-12 flex items-center justify-between rounded-[24px] p-2.5 transition-all duration-500 ${
+                    className={`relative z-10 mt-14 flex items-center justify-between rounded-[36px] p-3 transition-all duration-500 bg-white/70 backdrop-blur-2xl border-[1.5px] border-white ${
                       isCenter
-                        ? "bg-white/95 backdrop-blur-xl shadow-[0_15px_40px_-10px_rgba(0,0,0,0.15)] border border-white/80"
-                        : "bg-white border border-[#EEF2EF] shadow-[0_5px_20px_-5px_rgba(0,0,0,0.03)]"
+                        ? "shadow-[0_20px_50px_-10px_rgba(0,0,0,0.08),inset_0_2px_4px_rgba(255,255,255,1)]"
+                        : "shadow-[0_10px_30px_-5px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                     }`}
                   >
                     {/* LEFT PILL */}
-                    <div className="flex items-center gap-2.5 rounded-[18px] border border-[#EEF2EF] bg-white px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#0E5A2E]/80 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.02)]">
-                      <User className="h-3.5 w-3.5 text-[#0E5A2E]" strokeWidth={2.5} />
-                      <span className="truncate">{t.role}</span>
+                    <div className="flex items-center gap-3 rounded-[24px] bg-white px-5 py-4 shadow-[0_5px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)]">
+                      <User className="h-[18px] w-[18px] text-[#0E5A2E]" strokeWidth={2.5} />
+                      <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#0E5A2E]">{t.role}</span>
                     </div>
 
                     {/* RIGHT ACTIONS */}
-                    <div className="flex items-center gap-2">
-                      {/* Quote button */}
-                      <div className="flex h-10 w-10 items-center justify-center rounded-[18px] border border-[#EEF2EF] bg-white text-[#0E5A2E]/40 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.02)] transition-colors hover:text-[#5DAA72]">
-                        <Quote className="h-4 w-4" strokeWidth={2.5} />
+                    <div className="flex items-center gap-2.5">
+                      {/* Quote Button */}
+                      <div className="flex h-[52px] w-[52px] items-center justify-center rounded-[20px] bg-white text-[#0E5A2E]/50 shadow-[0_5px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)] transition-colors hover:text-[#5DAA72]">
+                        <Quote className="h-5 w-5" strokeWidth={2.5} />
                       </div>
                       
-                      {/* Star button */}
+                      {/* Star Button */}
                       <div
-                        className={`flex shrink-0 items-center gap-2 rounded-[18px] px-5 py-2.5 text-[14px] font-bold shadow-sm transition-transform hover:scale-105 ${
+                        className={`flex h-[52px] shrink-0 items-center gap-2.5 rounded-[20px] px-6 text-[15px] font-bold transition-transform hover:scale-105 ${
                           isCenter
-                            ? "bg-[#0E5A2E] text-white shadow-[0_8px_20px_-6px_rgba(14,90,46,0.5)] border border-[#0E5A2E]"
-                            : "bg-white text-[#0E5A2E] border border-[#EEF2EF] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.02)]"
+                            ? "bg-[#0E5A2E] text-white shadow-[0_8px_25px_-5px_rgba(14,90,46,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)]"
+                            : "bg-white text-[#0E5A2E] shadow-[0_5px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)]"
                         }`}
                       >
-                        <Star className="h-4 w-4 fill-[color:var(--gold)] text-[color:var(--gold)]" />
+                        <Star className="h-[18px] w-[18px] fill-[#F5C518] text-[#F5C518]" />
                         5.0
                       </div>
                     </div>
