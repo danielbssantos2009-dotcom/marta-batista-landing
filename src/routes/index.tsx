@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Leaf,
   Sparkles,
@@ -141,21 +141,8 @@ function Blobs() {
 
 /* ================= HEADER ================= */
 function Header() {
-  const { scrollY } = useScroll();
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 80);
-  });
-
   return (
-    <motion.header
-      className={`fixed left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 items-center justify-between transition-all duration-500 ${
-        isScrolled 
-          ? "top-4 px-6 py-2.5 glass-header rounded-full sm:px-10" 
-          : "top-6 px-4 py-3 bg-transparent rounded-none sm:px-6"
-      }`}
-    >
+    <header className="absolute left-1/2 top-6 z-50 flex w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 items-center justify-between px-2 sm:px-4">
       <div className="flex items-center gap-2.5">
         <div className="leading-tight">
           <div className="font-display text-[20px] font-medium sm:text-[22px] text-[color:var(--moss)]">Marta Batista</div>
@@ -174,12 +161,12 @@ function Header() {
         href={WHATSAPP_URL}
         target="_blank"
         rel="noreferrer"
-        className="hidden items-center gap-2 rounded-full glass px-5 py-2.5 text-sm text-[color:var(--moss)] transition-all hover:-translate-y-0.5 hover:shadow-glass sm:inline-flex"
+        className="hidden items-center gap-2 rounded-full border border-[color:var(--leaf)]/20 bg-white/40 px-5 py-2.5 text-sm text-[color:var(--moss)] backdrop-blur-md transition-all hover:-translate-y-0.5 hover:bg-white/60 sm:inline-flex"
       >
         <MessageCircle className="h-4 w-4" />
         Agendar
       </a>
-    </motion.header>
+    </header>
   );
 }
 
