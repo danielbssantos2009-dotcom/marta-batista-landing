@@ -479,37 +479,39 @@ function Approach() {
           {pillars.map((p, i) => (
             <div key={p.title} className={`h-full ${i % 2 === 1 ? 'lg:translate-y-20' : ''}`}>
               <Reveal delay={i * 100}>
-                <div className="group relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[32px] glass p-7 transition-all duration-700 hover:-translate-y-2 hover:shadow-float lg:min-h-[380px]">
-                  
-                  {/* Subtle ambient glow inside the glass card */}
-                  <div 
-                    className="absolute -inset-10 opacity-30 transition-all duration-700 group-hover:opacity-60 group-hover:scale-110" 
-                    style={{ 
-                      background: `radial-gradient(circle at ${i % 2 === 0 ? '80% 80%' : '20% 80%'}, var(--sage) 0%, transparent 60%)`, 
-                      filter: 'blur(30px)' 
-                    }} 
-                  />
-                  
-                  {/* Top Pill */}
-                  <div className="relative z-10 w-max rounded-full border border-[color:var(--moss)]/10 bg-white/40 px-4 py-1.5 text-[10px] font-medium uppercase tracking-widest text-[color:var(--moss)]/80 backdrop-blur-md">
-                    Princípio 0{i + 1}
-                  </div>
-
-                  {/* Bottom Content */}
-                  <div className="relative z-10 mt-auto flex flex-col gap-4">
+                <div className="h-full" style={{ animation: `float-y 6s ease-in-out ${i * -1.5}s infinite` }}>
+                  <div className="group relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[32px] glass p-7 transition-all duration-700 hover:shadow-float lg:min-h-[380px]">
+                    
+                    {/* Subtle ambient glow inside the glass card */}
                     <div 
-                      className="flex h-12 w-12 items-center justify-center rounded-2xl text-cream transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3 shadow-sm" 
-                      style={{ background: "var(--gradient-cta)" }}
-                    >
-                      <p.icon className="h-6 w-6" strokeWidth={1.8} />
+                      className="absolute -inset-10 opacity-30 transition-all duration-700 group-hover:opacity-60 group-hover:scale-110" 
+                      style={{ 
+                        background: `radial-gradient(circle at ${i % 2 === 0 ? '80% 80%' : '20% 80%'}, var(--sage) 0%, transparent 60%)`, 
+                        filter: 'blur(30px)' 
+                      }} 
+                    />
+                    
+                    {/* Top Pill */}
+                    <div className="relative z-10 w-max rounded-full border border-[color:var(--moss)]/10 bg-white/40 px-4 py-1.5 text-[10px] font-medium uppercase tracking-widest text-[color:var(--moss)]/80 backdrop-blur-md">
+                      Princípio 0{i + 1}
                     </div>
-                    <div>
-                      <h3 className="font-display text-2xl text-[color:var(--moss)] leading-[1.1] tracking-tight">
-                        {p.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-[color:var(--moss)]/70">
-                        {p.text}
-                      </p>
+
+                    {/* Bottom Content */}
+                    <div className="relative z-10 mt-auto flex flex-col gap-4">
+                      <div 
+                        className="flex h-12 w-12 items-center justify-center rounded-2xl text-cream transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3 shadow-sm" 
+                        style={{ background: "var(--gradient-cta)" }}
+                      >
+                        <p.icon className="h-6 w-6" strokeWidth={1.8} />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-2xl text-[color:var(--moss)] leading-[1.1] tracking-tight">
+                          {p.title}
+                        </h3>
+                        <p className="mt-3 text-sm leading-relaxed text-[color:var(--moss)]/70">
+                          {p.text}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
