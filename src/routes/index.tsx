@@ -765,7 +765,7 @@ const Particles = () => {
   );
 };
 
-function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
+function TestimonialCard({ t, isActive, index, activeIdx }) {
   // 3D Motion Tracking
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -774,7 +774,7 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
-  // Amplified 3D Tilt
+  // Amplified 3D Tilt for Active Card
   const rotateX = useTransform(smoothY, [0, 1], [6, -6]);
   const rotateY = useTransform(smoothX, [0, 1], [-6, 6]);
 
@@ -796,30 +796,39 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
     mouseY.set(0.5);
   };
 
+  // Inactive card rotation (4 degrees back)
+  const isLeftOfActive = index < activeIdx;
+  const isRightOfActive = index > activeIdx;
+  const idleRotateY = isLeftOfActive ? 4 : isRightOfActive ? -4 : 0;
+
   return (
     <motion.div
       layout
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      initial={false}
       animate={{
         flex: isActive ? 3.5 : 1,
-        scale: isActive ? 1 : 0.94,
-        y: isActive ? [0, -4, 0] : [0, -1, 0], // Idle breathing float
+        scale: isActive ? 1 : [0.996, 1, 0.996], // Inactive breathing (99.6% -> 100%)
+        y: isActive ? [0, -3, 0] : 0, // Active breathing (0 -> -3px)
+        opacity: isActive ? 1 : 0.7,
       }}
       transition={{
-        layout: { type: "spring", bounce: 0.35, duration: 1 }, // High rubber-band bounce
-        scale: { duration: 0.6, ease: [0.2, 0.8, 0.2, 1] },
-        y: { repeat: Infinity, duration: isActive ? 6 : 8, ease: "easeInOut" },
+        layout: { type: "spring", bounce: 0.35, duration: 1 }, 
+        scale: isActive ? { duration: 0.6 } : { repeat: Infinity, duration: 9, ease: "easeInOut" },
+        y: { repeat: Infinity, duration: 7, ease: "easeInOut" },
+        opacity: { duration: 0.8 }
       }}
       style={{
         rotateX: isActive ? rotateX : 0,
-        rotateY: isActive ? rotateY : 0,
+        rotateY: isActive ? rotateY : idleRotateY,
         transformStyle: "preserve-3d",
+        transition: "transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)"
       }}
       className={`group relative flex w-full flex-col overflow-hidden rounded-[48px] lg:h-full lg:w-auto origin-center ${
         isActive
           ? "h-auto shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-[80px] z-20"
-          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10 opacity-70"
+          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10"
       }`}
     >
       {/* Dynamic Mouse Tracking Glare */}
@@ -833,7 +842,7 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
       {/* Drifting Glass Reflection (Reflexo andando) */}
       <motion.div
         animate={{ left: ["-150%", "250%"] }}
-        transition={{ duration: isActive ? 5 : 15, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: isActive ? 5 : 15, repeat: Infinity, ease: "linear", delay: isActive ? 0.65 : 0 }}
         className="pointer-events-none absolute top-0 bottom-0 w-[80%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10 mix-blend-overlay"
       />
 
@@ -844,7 +853,7 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
           <motion.div
             initial={false}
             animate={{ rotate: isActive ? 8 : 0, scale: isActive ? 1.1 : 1, opacity: isActive ? 0.8 : 0.4, y: isActive ? [0, -3, 0] : 0 }}
-            transition={{ duration: 0.8, type: "spring", y: { repeat: Infinity, duration: 4, ease: "easeInOut" } }}
+            transition={{ duration: 0.8, delay: isActive ? 0.15 : 0, type: "spring", y: { repeat: Infinity, duration: 4, ease: "easeInOut" } }}
             style={{ transformOrigin: "top left" }}
           >
             <Quote className="h-12 w-12 text-[color:var(--leaf)] drop-shadow-md" strokeWidth={1.5} />
@@ -863,8 +872,9 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
         {/* Footer (Avatar, Name, Stars) */}
         <div className="mt-10 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-8">
           <motion.div
+            initial={false}
             animate={isActive ? { scale: [1, 1.25, 1.1] } : { scale: 1 }}
-            transition={{ duration: 0.8, delay: isActive ? 0.1 : 0, type: "spring" }}
+            transition={{ duration: 0.8, delay: isActive ? 0.5 : 0, type: "spring" }}
             className={`flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full font-display text-3xl text-cream transition-all duration-700 ${
               isActive ? "shadow-[0_15px_30px_-5px_rgba(20,80,40,0.5),inset_0_2px_5px_rgba(255,255,255,0.7)]" : "shadow-md"
             }`}
@@ -875,6 +885,7 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
           
           <div className="min-w-0 flex-1">
             <motion.div 
+               initial={false}
                animate={{ x: isActive ? 0 : -10, opacity: isActive ? 1 : 0.7 }}
                transition={{ duration: 0.6, delay: isActive ? 0.2 : 0 }}
                className="truncate font-display text-2xl text-[color:var(--moss)] drop-shadow-sm"
@@ -882,6 +893,7 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
                {t.name}
             </motion.div>
             <motion.div 
+              initial={false}
               animate={{ x: isActive ? 0 : -15, opacity: isActive ? 1 : 0.6 }}
               transition={{ duration: 0.6, delay: isActive ? 0.25 : 0 }}
               className="truncate text-[12px] font-extrabold uppercase tracking-[0.25em] text-[color:var(--moss)]/70 mt-1"
@@ -896,7 +908,7 @@ function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
                 key={s}
                 initial={false}
                 animate={{ scale: isActive ? [0, 1.3, 1] : 0, opacity: isActive ? 1 : 0 }}
-                transition={{ delay: isActive ? 0.45 + starIdx * 0.1 : 0, duration: 0.5, type: "spring", bounce: 0.6 }}
+                transition={{ delay: isActive ? 0.42 + starIdx * 0.08 : 0, duration: 0.5, type: "spring", bounce: 0.6 }}
               >
                 <Star className={`h-[22px] w-[22px] fill-current ${isActive ? "drop-shadow-md" : ""}`} />
               </motion.div>
@@ -930,17 +942,14 @@ function Testimonials() {
     isHovered.current = false;
   };
 
-  // 5-second Idle Peek "Oi"
+  // Autoplay Logic (8 seconds)
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const interval = setInterval(() => {
       if (!isHovered.current) {
-        setActiveIdx(1); // Peek middle card
-        setTimeout(() => {
-          if (!isHovered.current) setActiveIdx(0);
-        }, 1200);
+        setActiveIdx((prev) => (prev + 1) % TESTIMONIAL_ITEMS.length);
       }
-    }, 5000);
-    return () => clearTimeout(timer);
+    }, 8000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -950,10 +959,14 @@ function Testimonials() {
 
       {/* AMBIENT INTELLIGENT BACKGROUND GLOW */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        {/* Glow Tracking Active Card */}
+        {/* Glow Tracking Active Card with Pulse */}
         <motion.div
-          animate={{ left: `${activeIdx * 25}%` }}
-          transition={{ type: "spring", damping: 30, stiffness: 80 }}
+          initial={false}
+          animate={{ left: `${activeIdx * 25}%`, scale: [1, 1.08, 1] }}
+          transition={{ 
+            left: { type: "spring", damping: 30, stiffness: 80, delay: 0.18 },
+            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+          }}
           className="absolute top-[10%] h-[80%] w-[50%] rounded-full bg-gradient-to-br from-[#8bb999]/50 to-[#3a7550]/20 blur-[150px] mix-blend-multiply opacity-80"
         />
         {/* Slow Background Panning Light */}
@@ -981,8 +994,8 @@ function Testimonials() {
         </div>
 
         <Reveal delay={120}>
-          {/* Container with Proximity Tracker and Magnetic Shift */}
-          <motion.div 
+          {/* Container with Proximity Tracker */}
+          <div 
             ref={containerRef}
             onMouseMove={handleContainerMouseMove}
             onMouseLeave={handleContainerMouseLeave}
@@ -993,12 +1006,25 @@ function Testimonials() {
                 key={t.name}
                 t={t}
                 index={i}
+                activeIdx={activeIdx}
                 isActive={activeIdx === i}
-                setActive={setActiveIdx}
-                mouseXGlobal={0} // Can pass global tracking if needed
               />
             ))}
-          </motion.div>
+          </div>
+          
+          {/* Progress Indicators */}
+          <div className="mt-10 flex justify-center gap-3">
+            {TESTIMONIAL_ITEMS.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveIdx(idx)}
+                aria-label={`Ver depoimento ${idx + 1}`}
+                className={`h-2.5 rounded-full transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+                  activeIdx === idx ? "w-10 bg-[color:var(--leaf)] shadow-md" : "w-2.5 bg-[color:var(--moss)]/20 hover:bg-[color:var(--moss)]/40"
+                }`}
+              />
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>
