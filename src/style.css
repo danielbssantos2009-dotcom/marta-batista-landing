@@ -1,0 +1,267 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 20px);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-leaf: var(--leaf);
+  --color-moss: var(--moss);
+  --color-sage: var(--sage);
+  --color-cream: var(--cream);
+  --color-gold: var(--gold);
+
+  --shadow-glass: 0 20px 60px -20px color-mix(in oklab, var(--moss) 25%, transparent);
+  --shadow-float: 0 30px 80px -30px color-mix(in oklab, var(--leaf) 35%, transparent);
+}
+
+:root {
+  --radius: 1.25rem;
+
+  /* Green palette */
+  --leaf: oklch(0.45 0.12 145);        /* deep leaf green */
+  --moss: oklch(0.35 0.09 150);        /* dark moss */
+  --sage: oklch(0.78 0.07 145);        /* soft sage */
+  --cream: oklch(0.98 0.012 95);       /* warm cream white */
+  --gold: oklch(0.78 0.11 85);         /* warm honey */
+
+  --background: oklch(0.985 0.008 130);
+  --foreground: oklch(0.22 0.04 150);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.04 150);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.04 150);
+
+  --primary: oklch(0.45 0.12 145);
+  --primary-foreground: oklch(0.985 0.008 130);
+  --secondary: oklch(0.94 0.03 140);
+  --secondary-foreground: oklch(0.28 0.06 150);
+  --muted: oklch(0.95 0.02 135);
+  --muted-foreground: oklch(0.48 0.04 150);
+  --accent: oklch(0.88 0.07 140);
+  --accent-foreground: oklch(0.25 0.06 150);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.9 0.02 140);
+  --input: oklch(0.9 0.02 140);
+  --ring: oklch(0.55 0.13 145);
+
+  --gradient-hero: radial-gradient(
+      120% 80% at 20% 10%,
+      color-mix(in oklab, var(--sage) 50%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      100% 90% at 90% 30%,
+      color-mix(in oklab, var(--leaf) 20%, transparent) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, var(--cream) 0%, oklch(0.96 0.03 135) 100%);
+
+  --gradient-cta: linear-gradient(135deg, var(--leaf) 0%, var(--moss) 100%);
+  --gradient-soft: linear-gradient(180deg, var(--cream), oklch(0.96 0.025 140));
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Organic blob shapes */
+@utility blob {
+  border-radius: 42% 58% 63% 37% / 44% 39% 61% 56%;
+  animation: blob-morph 18s ease-in-out infinite;
+}
+
+@utility blob-2 {
+  border-radius: 63% 37% 52% 48% / 52% 61% 39% 48%;
+  animation: blob-morph 22s ease-in-out infinite reverse;
+}
+
+/* Glass surface */
+@utility glass {
+  background: color-mix(in oklab, white 55%, transparent);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid color-mix(in oklab, white 65%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 70%, transparent),
+    0 20px 60px -20px color-mix(in oklab, var(--moss) 22%, transparent);
+}
+
+@utility glass-dark {
+  background: color-mix(in oklab, var(--moss) 65%, transparent);
+  backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid color-mix(in oklab, white 18%, transparent);
+  box-shadow: 0 30px 80px -20px color-mix(in oklab, var(--moss) 40%, transparent);
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+@utility float-slower {
+  animation: float 12s ease-in-out infinite;
+}
+
+@utility breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: reveal-up 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes blob-morph {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 44% 39% 61% 56%; }
+  33% { border-radius: 58% 42% 38% 62% / 62% 47% 53% 38%; }
+  66% { border-radius: 38% 62% 51% 49% / 39% 58% 42% 61%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-24px) rotate(2deg); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes reveal-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility marquee {
+  animation: marquee 40s linear infinite;
+}
+
+>.gitignore:
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+.output
+.vinxi
+.tanstack/**
+.nitro
+*.local
+
+# Wrangler / Cloudflare
+.wrangler/
+.dev.vars
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+>.prettierignora:
+node_modules
+dist
+.output
+.vinxi
+pnpm-lock.yaml
+package-lock.json
+bun.lock
+routeTree.gen.ts
+
+>.pretierrc:
+{
+  "printWidth": 100,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "all"
+}
+
+>AGENTS.mds:
+<!-- LOVABLE:BEGIN -->
+> [!IMPORTANT]
+> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
+> published git history — force pushing, or rebasing/amending/squashing commits
+> that are already pushed — as it rewrites history on Lovable's side and the
+> user will likely lose their project history.
+>
+> Commits you push to the connected branch sync back to Lovable and show up in
+> the editor, so keep the branch in a working state.
+<!-- LOVABLE:END -->
