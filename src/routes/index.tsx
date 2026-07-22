@@ -92,19 +92,20 @@ function CTAButton({
   const size = large ? "px-8 py-4 text-base sm:px-10 sm:py-5 sm:text-lg" : "px-6 py-3 text-sm sm:text-base";
   const styles =
     variant === "primary"
-      ? "text-cream shadow-[0_20px_50px_-15px_color-mix(in_oklab,var(--leaf)_65%,transparent)] hover:shadow-[0_28px_70px_-15px_color-mix(in_oklab,var(--leaf)_75%,transparent)]"
+      ? "text-cream shadow-[0_15px_30px_-10px_color-mix(in_oklab,var(--leaf)_50%,transparent)] hover:shadow-[0_25px_50px_-12px_color-mix(in_oklab,var(--leaf)_60%,transparent)] overflow-hidden"
       : "text-[color:var(--moss)] border border-[color:var(--leaf)]/25 bg-white/50 backdrop-blur-md hover:bg-white/80";
   return (
     <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className={`${base} ${size} ${styles}`}>
       {variant === "primary" && (
-        <span
-          className="absolute inset-0 rounded-full"
-          style={{ background: "var(--gradient-cta)" }}
-        />
-      )}
-      {variant === "primary" && (
-        <span className="absolute inset-0 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-70"
-          style={{ background: "var(--gradient-cta)" }} />
+        <>
+          <span
+            className="absolute inset-0 rounded-full"
+            style={{ background: "var(--gradient-cta)" }}
+          />
+          <span className="absolute inset-0 rounded-full bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.25)_50%,transparent_100%)] bg-[length:200%_100%] animate-[shimmer_2.5s_infinite]" />
+          <span className="absolute inset-0 rounded-full opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-60"
+            style={{ background: "var(--gradient-cta)" }} />
+        </>
       )}
       <span className="relative flex items-center gap-3">
         {children}
@@ -177,167 +178,92 @@ function Hero() {
       <Blobs />
 
       {/* Hero content */}
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-24 pt-24 sm:px-8 lg:grid-cols-12 lg:pb-32 lg:pt-32">
-        <div className="lg:col-span-7">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs uppercase tracking-[0.2em] text-[color:var(--moss)]">
-              <Sparkles className="h-3.5 w-3.5" />
-              Nutrição clínica &amp; funcional
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <h1 className="mt-6 font-display text-[44px] leading-[1.02] tracking-tight text-[color:var(--moss)] text-balance sm:text-[64px] lg:text-[76px]">
-              Uma nutrição que{" "}
-              <span className="relative inline-block">
-                <span
-                  className="italic"
-                  style={{
-                    background: "linear-gradient(90deg, var(--leaf), var(--gold))",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  respira
-                </span>
-                <svg
-                  className="absolute -bottom-2 left-0 w-full"
-                  viewBox="0 0 200 12"
-                  fill="none"
-                  aria-hidden
-                >
-                  <path
-                    d="M2 8 C 50 2, 150 2, 198 8"
-                    stroke="var(--leaf)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    opacity="0.4"
-                  />
-                </svg>
-              </span>{" "}
-              com você.
-            </h1>
-          </Reveal>
-          <Reveal delay={220}>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-[color:var(--moss)]/75 sm:text-xl">
-              Um acompanhamento nutricional humano, científico e sob medida —
-              construído para transformar sua rotina, seu corpo e sua relação com a comida.
-            </p>
-          </Reveal>
-          <Reveal delay={320}>
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <CTAButton large>
-                <MessageCircle className="h-5 w-5" />
-                Agendar consulta
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </CTAButton>
-              <a href="#sobre" className="text-sm font-medium text-[color:var(--moss)] underline-offset-4 hover:underline">
-                Conhecer a abordagem
-              </a>
-            </div>
-          </Reveal>
-
-          <Reveal delay={420}>
-            <div className="mt-12 flex flex-wrap items-center gap-6 text-sm text-[color:var(--moss)]/70">
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-2">
-                  {[0, 1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="h-8 w-8 rounded-full border-2 border-white"
-                      style={{
-                        background: `linear-gradient(135deg, oklch(0.78 0.09 ${120 + i * 20}), oklch(0.55 0.11 ${140 + i * 15}))`,
-                      }}
-                    />
-                  ))}
-                </div>
-                <span>+3.400 pacientes acompanhados</span>
-              </div>
-              <div className="hidden h-4 w-px bg-[color:var(--moss)]/20 sm:block" />
-              <div className="flex items-center gap-1.5">
-                <div className="flex text-[color:var(--gold)]">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" />
-                  ))}
-                </div>
-                <span>4.9 · avaliações reais</span>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Hero visual */}
-        <div className="relative lg:col-span-5">
-          <Reveal delay={200}>
-            <div className="relative mx-auto aspect-[4/5] max-w-md">
-              {/* Floating orbs */}
-              <div
-                className="absolute -left-6 top-6 h-24 w-24 rounded-full glass float-slow"
-                aria-hidden
-              />
-              <div
-                className="absolute -right-4 bottom-16 h-32 w-32 rounded-full float-slower"
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center px-5 pb-24 pt-24 sm:px-8 lg:pb-32 lg:pt-32">
+        <Reveal>
+          <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs uppercase tracking-[0.2em] text-[color:var(--moss)]">
+            <Sparkles className="h-3.5 w-3.5" />
+            Nutrição clínica &amp; funcional
+          </div>
+        </Reveal>
+        <Reveal delay={120}>
+          <h1 className="mt-6 font-display text-[44px] leading-[1.02] tracking-tight text-[color:var(--moss)] text-balance sm:text-[64px] lg:text-[76px]">
+            Uma nutrição que{" "}
+            <span className="relative inline-block">
+              <span
+                className="italic"
                 style={{
-                  background:
-                    "linear-gradient(135deg, color-mix(in oklab, var(--sage) 80%, transparent), color-mix(in oklab, var(--leaf) 40%, transparent))",
-                  filter: "blur(1px)",
-                }}
-                aria-hidden
-              />
-
-              {/* Main organic frame */}
-              <div
-                className="relative h-full w-full overflow-hidden shadow-[0_40px_100px_-30px_color-mix(in_oklab,var(--moss)_50%,transparent)]"
-                style={{
-                  borderRadius: "62% 38% 55% 45% / 45% 55% 45% 55%",
+                  background: "linear-gradient(90deg, var(--leaf), var(--gold))",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
                 }}
               >
-                <img
-                  src={heroOrganic}
-                  alt="Composição orgânica de folhas, abacate, limão e esferas de vidro"
-                  className="h-full w-full object-cover"
-                  width={1600}
-                  height={1408}
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, transparent 55%, color-mix(in oklab, var(--moss) 25%, transparent))",
-                  }}
-                />
-              </div>
-
-              {/* Glass badge */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 glass rounded-2xl px-5 py-3 shadow-glass">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="flex h-9 w-9 items-center justify-center rounded-full text-cream"
-                    style={{ background: "var(--gradient-cta)" }}
-                  >
-                    <HeartPulse className="h-4 w-4" />
-                  </div>
-                  <div className="leading-tight">
-                    <div className="text-[11px] uppercase tracking-widest text-[color:var(--moss)]/60">
-                      CRN ativo
-                    </div>
-                    <div className="text-sm font-medium text-[color:var(--moss)]">
-                      Nutrição baseada em ciência
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating glass leaf */}
-              <img
-                src={glassLeaf}
-                alt=""
+                respira
+              </span>
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                viewBox="0 0 200 12"
+                fill="none"
                 aria-hidden
-                className="absolute -right-8 -top-10 h-32 w-32 float-slow drop-shadow-[0_20px_40px_rgba(60,100,60,0.25)] sm:h-40 sm:w-40"
-              />
+              >
+                <path
+                  d="M2 8 C 50 2, 150 2, 198 8"
+                  stroke="var(--leaf)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  opacity="0.4"
+                />
+              </svg>
+            </span>{" "}
+            com você.
+          </h1>
+        </Reveal>
+        <Reveal delay={220}>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[color:var(--moss)]/75 sm:text-xl">
+            Um acompanhamento nutricional humano, científico e sob medida —
+            construído para transformar sua rotina, seu corpo e sua relação com a comida.
+          </p>
+        </Reveal>
+        <Reveal delay={320}>
+          <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row">
+            <CTAButton large>
+              <MessageCircle className="h-5 w-5" />
+              Agendar consulta
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </CTAButton>
+            <a href="#sobre" className="text-sm font-medium text-[color:var(--moss)] underline-offset-4 hover:underline">
+              Conhecer a abordagem
+            </a>
+          </div>
+        </Reveal>
+
+        <Reveal delay={420}>
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 text-sm text-[color:var(--moss)]/70 sm:flex-row sm:gap-6">
+            <div className="flex items-center gap-2">
+              <div className="flex -space-x-2">
+                {[0, 1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="h-8 w-8 rounded-full border-2 border-white"
+                    style={{
+                      background: `linear-gradient(135deg, oklch(0.78 0.09 ${120 + i * 20}), oklch(0.55 0.11 ${140 + i * 15}))`,
+                    }}
+                  />
+                ))}
+              </div>
+              <span>+3.400 pacientes</span>
             </div>
-          </Reveal>
-        </div>
+            <div className="hidden h-1 w-1 rounded-full bg-[color:var(--moss)]/30 sm:block" />
+            <div className="flex items-center gap-1.5">
+              <div className="flex text-[color:var(--gold)]">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <span>4.9 · avaliações reais</span>
+            </div>
+          </div>
+        </Reveal>
       </div>
 
       {/* Trust marquee */}
