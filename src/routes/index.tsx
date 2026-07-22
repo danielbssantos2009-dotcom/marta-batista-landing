@@ -723,26 +723,29 @@ function Process() {
 
 /* ================= DEPOIMENTOS ================= */
 function Testimonials() {
+  const [activeIdx, setActiveIdx] = useState(0);
+
   const items = [
     {
       name: "Camila R.",
-      role: "Emagrecimento saudável",
-      text: "Perdi 14kg em 8 meses sem passar fome. A Marta me ensinou a comer, não a me punir. Recuperei minha autoestima e minha energia.",
+      role: "Emagrecimento Saudável",
+      text: "“Perdi 14kg em 8 meses sem dietas restritivas e sem passar fome. A Marta não me passou apenas um cardápio, ela me ensinou a entender a comida, não a me punir com ela. Recuperei minha autoestima, minha energia para brincar com meus filhos e finalmente fiz as pazes com o espelho. É uma transformação que vai muito além do peso corporal, é liberdade.”",
     },
     {
       name: "Bruna L.",
-      role: "Nutrição esportiva",
-      text: "Meu desempenho nos treinos mudou completamente. Ganhei massa magra, tô mais forte e mais leve ao mesmo tempo.",
+      role: "Nutrição Esportiva",
+      text: "“Meu desempenho nos treinos mudou completamente depois que ajustamos a alimentação. Eu achava que precisava comer menos para secar, mas estava perdendo massa magra. Com o plano estratégico da Marta, ganhei massa muscular, fiquei muito mais forte e incrivelmente mais leve ao mesmo tempo. Minha recuperação muscular agora é simplesmente outra.”",
     },
     {
       name: "Isabela M.",
-      role: "Saúde da mulher",
-      text: "Minha TPM, meu intestino e meu sono melhoraram muito. Sinto que finalmente entendo o meu corpo.",
+      role: "Saúde da Mulher",
+      text: "“Sempre sofri com dores absurdas na TPM, meu intestino nunca funcionava direito e meu sono era péssimo. Achava que era o 'normal' do meu corpo. A nutrição me mostrou que não. Minha TPM praticamente sumiu, meu intestino virou um relógio e durmo a noite toda. Sinto que finalmente entendo e respeito o funcionamento do meu corpo.”",
     },
   ];
+
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section className="relative overflow-hidden py-24 sm:py-32 bg-[#F4F7F5]">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
@@ -757,37 +760,57 @@ function Testimonials() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {items.map((t, i) => (
-            <Reveal key={t.name} delay={i * 120}>
-              <figure className="group relative flex h-full flex-col rounded-[28px] glass p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-float">
-                <Quote className="h-8 w-8 text-[color:var(--leaf)]/40" strokeWidth={1.5} />
-                <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-[color:var(--moss)]/85">
-                  &ldquo;{t.text}&rdquo;
-                </blockquote>
-                <div className="mt-6 flex items-center gap-3 border-t border-[color:var(--moss)]/10 pt-5">
-                  <div
-                    className="flex h-11 w-11 items-center justify-center rounded-full font-display text-lg text-cream"
-                    style={{ background: "var(--gradient-cta)" }}
+        <Reveal delay={120}>
+          <div className="mt-16 flex flex-col gap-6 lg:flex-row lg:h-[500px]">
+            {items.map((t, i) => {
+              const isActive = activeIdx === i;
+
+              return (
+                <div
+                  key={t.name}
+                  onMouseEnter={() => setActiveIdx(i)}
+                  className={`group relative flex w-full cursor-pointer flex-col overflow-hidden rounded-[40px] bg-white/40 backdrop-blur-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,0.8)] border border-white/60 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] lg:h-full lg:w-auto ${
+                    isActive ? "lg:flex-[3] h-auto" : "lg:flex-[1] h-[300px]"
+                  }`}
+                >
+                  {/* Fixed width inner container prevents text collapse during width animation on Desktop */}
+                  <div 
+                    className={`relative flex h-full w-full flex-col justify-between p-8 sm:p-10 lg:absolute lg:inset-0 lg:w-[900px] transition-opacity duration-700 ${
+                      isActive ? "opacity-100" : "lg:opacity-30 opacity-100"
+                    }`}
                   >
-                    {t.name[0]}
-                  </div>
-                  <div>
-                    <div className="font-medium text-[color:var(--moss)]">{t.name}</div>
-                    <div className="text-xs uppercase tracking-widest text-[color:var(--moss)]/55">
-                      {t.role}
+                    <div className="flex flex-col">
+                      <Quote className="h-10 w-10 text-[color:var(--leaf)]/40" strokeWidth={1.5} />
+                      <blockquote className="mt-6 max-w-[650px] text-lg leading-[1.8] text-[color:var(--moss)]/90">
+                        {t.text}
+                      </blockquote>
+                    </div>
+
+                    <div className="mt-8 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-6">
+                      <div
+                        className="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full font-display text-2xl text-cream shadow-sm"
+                        style={{ background: "var(--gradient-cta)" }}
+                      >
+                        {t.name[0]}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-display text-xl text-[color:var(--moss)]">{t.name}</div>
+                        <div className="truncate text-[11px] font-bold uppercase tracking-[0.2em] text-[color:var(--moss)]/60">
+                          {t.role}
+                        </div>
+                      </div>
+                      <div className="ml-auto hidden shrink-0 text-[color:var(--gold)] sm:flex">
+                        {[0, 1, 2, 3, 4].map((s) => (
+                          <Star key={s} className="h-[18px] w-[18px] fill-current" />
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  <div className="ml-auto flex text-[color:var(--gold)]">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <Star key={s} className="h-3.5 w-3.5 fill-current" />
-                    ))}
-                  </div>
                 </div>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
