@@ -475,9 +475,9 @@ function Approach() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:pb-12">
+        <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:pb-24">
           {pillars.map((p, i) => (
-            <div key={p.title} className={`h-full ${i % 2 === 1 ? 'lg:translate-y-10' : ''}`}>
+            <div key={p.title} className={`h-full ${i % 2 === 1 ? 'lg:translate-y-20' : ''}`}>
               <Reveal delay={i * 100}>
                 <div className="group relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[32px] glass p-7 transition-all duration-700 hover:-translate-y-2 hover:shadow-float lg:min-h-[380px]">
                   
