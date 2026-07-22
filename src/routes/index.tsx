@@ -722,6 +722,7 @@ function Process() {
 }
 
 /* ================= DEPOIMENTOS ================= */
+
 const TESTIMONIAL_ITEMS = [
   {
     name: "Camila R.",
@@ -740,7 +741,31 @@ const TESTIMONIAL_ITEMS = [
   },
 ];
 
-function TestimonialCard({ t, isActive, setActive, index }) {
+const Particles = () => {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={i}
+          animate={{
+            y: ["100%", "-20%"],
+            x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
+            opacity: [0, 0.3, 0],
+          }}
+          transition={{
+            duration: 15 + Math.random() * 20,
+            repeat: Infinity,
+            ease: "linear",
+            delay: Math.random() * 10,
+          }}
+          className="absolute bottom-0 h-4 w-4 rounded-full bg-white blur-[4px]"
+        />
+      ))}
+    </div>
+  );
+};
+
+function TestimonialCard({ t, isActive, index, mouseXGlobal }) {
   // 3D Motion Tracking
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -749,12 +774,13 @@ function TestimonialCard({ t, isActive, setActive, index }) {
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
-  const rotateX = useTransform(smoothY, [0, 1], [4, -4]);
-  const rotateY = useTransform(smoothX, [0, 1], [-4, 4]);
+  // Amplified 3D Tilt
+  const rotateX = useTransform(smoothY, [0, 1], [6, -6]);
+  const rotateY = useTransform(smoothX, [0, 1], [-6, 6]);
 
   const glareX = useTransform(smoothX, [0, 1], ["0%", "100%"]);
   const glareY = useTransform(smoothY, [0, 1], ["0%", "100%"]);
-  const glareBackground = useMotionTemplate`radial-gradient(circle 300px at ${glareX} ${glareY}, rgba(255,255,255,0.25), transparent 80%)`;
+  const glareBackground = useMotionTemplate`radial-gradient(circle 350px at ${glareX} ${glareY}, rgba(255,255,255,0.3), transparent 80%)`;
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isActive) return;
@@ -773,31 +799,30 @@ function TestimonialCard({ t, isActive, setActive, index }) {
   return (
     <motion.div
       layout
-      onMouseEnter={() => setActive(index)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       animate={{
         flex: isActive ? 3.5 : 1,
-        scale: isActive ? 1 : 0.96,
-        y: isActive ? [0, -4, 0] : 0, // Idle breathing float
+        scale: isActive ? 1 : 0.94,
+        y: isActive ? [0, -4, 0] : [0, -1, 0], // Idle breathing float
       }}
       transition={{
-        layout: { type: "spring", bounce: 0.2, duration: 0.8 },
+        layout: { type: "spring", bounce: 0.35, duration: 1 }, // High rubber-band bounce
         scale: { duration: 0.6, ease: [0.2, 0.8, 0.2, 1] },
-        y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
+        y: { repeat: Infinity, duration: isActive ? 6 : 8, ease: "easeInOut" },
       }}
       style={{
         rotateX: isActive ? rotateX : 0,
         rotateY: isActive ? rotateY : 0,
         transformStyle: "preserve-3d",
       }}
-      className={`group relative flex w-full cursor-pointer flex-col overflow-hidden rounded-[48px] lg:h-full lg:w-auto origin-center ${
+      className={`group relative flex w-full flex-col overflow-hidden rounded-[48px] lg:h-full lg:w-auto origin-center ${
         isActive
           ? "h-auto shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-[80px] z-20"
-          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10 opacity-80"
+          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10 opacity-70"
       }`}
     >
-      {/* 3D Dynamic Mouse Tracking Glare */}
+      {/* Dynamic Mouse Tracking Glare */}
       {isActive && (
         <motion.div
           className="pointer-events-none absolute inset-0 z-30 rounded-[48px] mix-blend-overlay opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -805,25 +830,21 @@ function TestimonialCard({ t, isActive, setActive, index }) {
         />
       )}
 
-      {/* Specific Ambient Glare (Idle Drift) */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[48px]">
-        <motion.div
-          animate={{ x: ["-10%", "10%", "-10%"] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className={`absolute -right-[20%] -top-[20%] h-[150%] w-[140%] -rotate-[25deg] rounded-[100%] bg-gradient-to-b from-white/60 via-white/10 to-transparent blur-[16px] transition-opacity duration-1000 ${
-            isActive ? "opacity-100" : "opacity-30"
-          }`}
-        />
-        <div className="absolute inset-0 rounded-[48px] ring-1 ring-inset ring-white/60 mix-blend-overlay" />
-      </div>
+      {/* Drifting Glass Reflection (Reflexo andando) */}
+      <motion.div
+        animate={{ left: ["-150%", "250%"] }}
+        transition={{ duration: isActive ? 5 : 15, repeat: Infinity, ease: "linear" }}
+        className="pointer-events-none absolute top-0 bottom-0 w-[80%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10 mix-blend-overlay"
+      />
 
       {/* Content Container */}
       <div className="relative z-20 flex h-full w-full flex-col justify-between p-8 sm:p-12 lg:absolute lg:inset-0 lg:w-[900px]">
         {/* Quote & Text */}
         <div className="flex flex-col">
           <motion.div
-            animate={{ rotate: isActive ? 8 : 0, scale: isActive ? 1.1 : 1, opacity: isActive ? 0.8 : 0.4 }}
-            transition={{ duration: 0.8, type: "spring" }}
+            initial={false}
+            animate={{ rotate: isActive ? 8 : 0, scale: isActive ? 1.1 : 1, opacity: isActive ? 0.8 : 0.4, y: isActive ? [0, -3, 0] : 0 }}
+            transition={{ duration: 0.8, type: "spring", y: { repeat: Infinity, duration: 4, ease: "easeInOut" } }}
             style={{ transformOrigin: "top left" }}
           >
             <Quote className="h-12 w-12 text-[color:var(--leaf)] drop-shadow-md" strokeWidth={1.5} />
@@ -831,8 +852,8 @@ function TestimonialCard({ t, isActive, setActive, index }) {
           
           <motion.blockquote
             initial={false}
-            animate={{ y: isActive ? 0 : 30, opacity: isActive ? 1 : 0 }}
-            transition={{ duration: 0.6, delay: isActive ? 0.15 : 0, ease: "easeOut" }}
+            animate={{ y: isActive ? 0 : 40, opacity: isActive ? 1 : 0 }}
+            transition={{ duration: 0.8, delay: isActive ? 0.35 : 0, type: "spring", bounce: 0.2 }}
             className="mt-8 max-w-[650px] text-[1.1rem] leading-[1.85] text-[color:var(--moss)] drop-shadow-sm font-medium"
           >
             {t.text}
@@ -842,8 +863,8 @@ function TestimonialCard({ t, isActive, setActive, index }) {
         {/* Footer (Avatar, Name, Stars) */}
         <div className="mt-10 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-8">
           <motion.div
-            animate={isActive ? { scale: [1, 1.3, 1.1] } : { scale: 1 }}
-            transition={{ duration: 0.6, times: [0, 0.4, 1] }}
+            animate={isActive ? { scale: [1, 1.25, 1.1] } : { scale: 1 }}
+            transition={{ duration: 0.8, delay: isActive ? 0.1 : 0, type: "spring" }}
             className={`flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full font-display text-3xl text-cream transition-all duration-700 ${
               isActive ? "shadow-[0_15px_30px_-5px_rgba(20,80,40,0.5),inset_0_2px_5px_rgba(255,255,255,0.7)]" : "shadow-md"
             }`}
@@ -853,10 +874,16 @@ function TestimonialCard({ t, isActive, setActive, index }) {
           </motion.div>
           
           <div className="min-w-0 flex-1">
-            <div className="truncate font-display text-2xl text-[color:var(--moss)] drop-shadow-sm">{t.name}</div>
             <motion.div 
-              animate={{ x: isActive ? 0 : -10, opacity: isActive ? 1 : 0.7 }}
-              transition={{ duration: 0.5 }}
+               animate={{ x: isActive ? 0 : -10, opacity: isActive ? 1 : 0.7 }}
+               transition={{ duration: 0.6, delay: isActive ? 0.2 : 0 }}
+               className="truncate font-display text-2xl text-[color:var(--moss)] drop-shadow-sm"
+            >
+               {t.name}
+            </motion.div>
+            <motion.div 
+              animate={{ x: isActive ? 0 : -15, opacity: isActive ? 1 : 0.6 }}
+              transition={{ duration: 0.6, delay: isActive ? 0.25 : 0 }}
               className="truncate text-[12px] font-extrabold uppercase tracking-[0.25em] text-[color:var(--moss)]/70 mt-1"
             >
               {t.role}
@@ -868,8 +895,8 @@ function TestimonialCard({ t, isActive, setActive, index }) {
               <motion.div
                 key={s}
                 initial={false}
-                animate={{ scale: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
-                transition={{ delay: isActive ? 0.3 + starIdx * 0.08 : 0, type: "spring", stiffness: 300, damping: 20 }}
+                animate={{ scale: isActive ? [0, 1.3, 1] : 0, opacity: isActive ? 1 : 0 }}
+                transition={{ delay: isActive ? 0.45 + starIdx * 0.1 : 0, duration: 0.5, type: "spring", bounce: 0.6 }}
               >
                 <Star className={`h-[22px] w-[22px] fill-current ${isActive ? "drop-shadow-md" : ""}`} />
               </motion.div>
@@ -883,32 +910,57 @@ function TestimonialCard({ t, isActive, setActive, index }) {
 
 function Testimonials() {
   const [activeIdx, setActiveIdx] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isHovered = useRef(false);
 
-  // Auto-peek "Cursor Hint" after 2 seconds
+  // Proximity-based Hover Logic
+  const handleContainerMouseMove = (e: React.MouseEvent) => {
+    isHovered.current = true;
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const width = rect.width;
+    
+    if (x < width * 0.33) setActiveIdx(0);
+    else if (x < width * 0.66) setActiveIdx(1);
+    else setActiveIdx(2);
+  };
+
+  const handleContainerMouseLeave = () => {
+    isHovered.current = false;
+  };
+
+  // 5-second Idle Peek "Oi"
   useEffect(() => {
-    const timer1 = setTimeout(() => setActiveIdx(2), 2000); // Open right card
-    const timer2 = setTimeout(() => setActiveIdx(0), 3200); // Revert to left card
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
+    const timer = setTimeout(() => {
+      if (!isHovered.current) {
+        setActiveIdx(1); // Peek middle card
+        setTimeout(() => {
+          if (!isHovered.current) setActiveIdx(0);
+        }, 1200);
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 bg-[#F4F7F5]">
-      {/* AMBIENT CONTINUOUS 3D BACKGROUND LIGHTING */}
+      {/* Dust Particles */}
+      <Particles />
+
+      {/* AMBIENT INTELLIGENT BACKGROUND GLOW */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        {/* Breathing Base Glow */}
+        {/* Glow Tracking Active Card */}
         <motion.div
-          animate={{ scale: [1, 1.08, 1], opacity: [0.6, 0.8, 0.6] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-[10%] top-[10%] h-[70%] w-[60%] rounded-full bg-gradient-to-br from-[#8bb999]/60 to-[#3a7550]/30 blur-[140px] mix-blend-multiply"
+          animate={{ left: `${activeIdx * 25}%` }}
+          transition={{ type: "spring", damping: 30, stiffness: 80 }}
+          className="absolute top-[10%] h-[80%] w-[50%] rounded-full bg-gradient-to-br from-[#8bb999]/50 to-[#3a7550]/20 blur-[150px] mix-blend-multiply opacity-80"
         />
-        {/* Slow Drifting Accent Glow */}
+        {/* Slow Background Panning Light */}
         <motion.div
-          animate={{ x: ["-15%", "15%", "-15%"], y: ["0%", "10%", "0%"] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute right-[-10%] bottom-[-10%] h-[80%] w-[60%] rounded-full bg-gradient-to-tl from-[#75b084]/50 to-[#2c6541]/10 blur-[150px] mix-blend-multiply opacity-60"
+          animate={{ x: ["-20%", "20%", "-20%"] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute top-0 bottom-0 w-full bg-gradient-to-br from-transparent via-white/40 to-transparent blur-[120px] mix-blend-overlay"
         />
       </div>
 
@@ -916,8 +968,9 @@ function Testimonials() {
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
-              <span className="h-px w-8 bg-[color:var(--leaf)]" /> Depoimentos
-              <span className="h-px w-8 bg-[color:var(--leaf)]" />
+              <motion.span animate={{ width: ["2rem", "1rem", "2rem"] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="h-px bg-[color:var(--leaf)]" />
+              Depoimentos
+              <motion.span animate={{ width: ["2rem", "1rem", "2rem"] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="h-px bg-[color:var(--leaf)]" />
             </div>
           </Reveal>
           <Reveal delay={80}>
@@ -928,7 +981,13 @@ function Testimonials() {
         </div>
 
         <Reveal delay={120}>
-          <div className="mt-16 flex flex-col gap-6 lg:flex-row lg:h-[540px]">
+          {/* Container with Proximity Tracker and Magnetic Shift */}
+          <motion.div 
+            ref={containerRef}
+            onMouseMove={handleContainerMouseMove}
+            onMouseLeave={handleContainerMouseLeave}
+            className="mt-16 flex flex-col gap-6 lg:flex-row lg:h-[560px]"
+          >
             {TESTIMONIAL_ITEMS.map((t, i) => (
               <TestimonialCard
                 key={t.name}
@@ -936,9 +995,10 @@ function Testimonials() {
                 index={i}
                 isActive={activeIdx === i}
                 setActive={setActiveIdx}
+                mouseXGlobal={0} // Can pass global tracking if needed
               />
             ))}
-          </div>
+          </motion.div>
         </Reveal>
       </div>
     </section>
