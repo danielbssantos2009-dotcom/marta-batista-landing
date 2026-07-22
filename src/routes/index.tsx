@@ -150,16 +150,16 @@ function Header() {
 
   return (
     <motion.header
-      className={`fixed left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 items-center justify-between px-5 transition-all duration-500 sm:px-8 ${
+      className={`fixed left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-7xl -translate-x-1/2 items-center justify-between transition-all duration-500 ${
         isScrolled 
-          ? "top-4 py-3 glass shadow-glass rounded-full" 
-          : "top-6 py-4 bg-transparent rounded-none"
+          ? "top-4 px-6 py-2.5 glass-header rounded-full sm:px-10" 
+          : "top-6 px-4 py-3 bg-transparent rounded-none sm:px-6"
       }`}
     >
       <div className="flex items-center gap-2.5">
         <div className="leading-tight">
-          <div className="font-display text-[22px] font-medium sm:text-[26px] text-[color:var(--moss)]">Marta Batista</div>
-          <div className="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-[color:var(--leaf)]/80">
+          <div className="font-display text-[20px] font-medium sm:text-[22px] text-[color:var(--moss)]">Marta Batista</div>
+          <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[color:var(--leaf)]/80">
             Nutricionista
           </div>
         </div>
