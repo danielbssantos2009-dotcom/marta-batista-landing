@@ -717,22 +717,25 @@ function Process() {
     {
       name: "Camila R.",
       role: "Emagrecimento saudável",
-      text: "Perdi 14kg em 8 meses sem passar fome. A Marta me ensinou a comer, não a me punir. Recuperei minha autoestima e minha energia.",
+      text: "“Perdi 14kg em 8 meses sem passar fome. A Marta me ensinou a comer, não a me punir. Recuperei minha autoestima e minha energia.”",
     },
     {
       name: "Bruna L.",
       role: "Nutrição esportiva",
-      text: "Meu desempenho nos treinos mudou completamente. Ganhei massa magra, tô mais forte e mais leve ao mesmo tempo.",
+      text: "“Meu desempenho nos treinos mudou completamente. Ganhei massa magra, muito mais forte e mais leve ao mesmo tempo.”",
     },
     {
       name: "Isabela M.",
       role: "Saúde da mulher",
-      text: "Minha TPM, meu intestino e meu sono melhoraram muito. Sinto que finalmente entendi o meu corpo.",
+      text: "“Minha TPM, meu intestino e meu sono melhoraram muito. Sinto que finalmente entendi o meu corpo.”",
     },
   ];
+
   return (
-    <section className="relative overflow-hidden py-32 bg-[#F8FAF7]">
-      <div className="mx-auto max-w-[1400px] px-6 sm:px-12">
+    <section className="relative overflow-hidden bg-[#F8FAF7] py-32 font-sans">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+        
+        {/* HEADER */}
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#0E5A2E]">
@@ -741,106 +744,108 @@ function Process() {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <h2 className="mt-5 font-display text-[2.75rem] leading-[1.1] tracking-tight text-[#0E5A2E] sm:text-6xl text-balance">
+            <h2 className="mt-6 font-display text-[2.75rem] leading-[1.1] tracking-tight text-[#0E5A2E] sm:text-5xl text-balance">
               Histórias reais de quem <em className="font-normal text-[#5DAA72] italic">voltou a respirar leveza</em>.
             </h2>
           </Reveal>
         </div>
 
+        {/* CARDS CAROUSEL */}
         <div className="relative mt-24 flex flex-col items-center justify-center gap-10 lg:-mx-12 lg:flex-row lg:gap-0">
           {items.map((t, i) => {
             const isCenter = i === 1;
 
             return (
-              <Reveal
+              <div
                 key={t.name}
-                delay={i * 120}
-                className={`w-full transition-all duration-[900ms] ease-[cubic-bezier(0.23,1,0.32,1)] lg:w-[42%] ${
-                  isCenter ? "z-20 lg:scale-[1.06]" : "z-0 lg:scale-[0.88] lg:opacity-85"
+                className={`w-full transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] lg:w-[38%] ${
+                  isCenter ? "z-20 lg:scale-[1.15]" : "z-0 lg:scale-[0.9] lg:opacity-95"
                 }`}
               >
                 <div
-                  className={`group relative flex h-full min-h-[460px] flex-col justify-between rounded-[36px] p-8 sm:p-10 transition-all duration-[800ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                  className={`group relative flex h-full min-h-[440px] flex-col justify-between rounded-[40px] p-8 sm:p-10 transition-all duration-700 ${
                     isCenter
-                      ? "bg-gradient-to-br from-[#2D7A48] to-[#0E5A2E] shadow-[0_40px_100px_-20px_rgba(14,90,46,0.6),inset_0_1px_1px_rgba(255,255,255,0.4)] border border-white/20"
-                      : "bg-[#FFFFFF]/70 backdrop-blur-[40px] border border-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,1)] hover:opacity-100 hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1)] hover:bg-[#FFFFFF]/90"
+                      ? "bg-gradient-to-br from-[#c5dec9] via-[#8bb999] to-[#4c8a62] shadow-[0_40px_100px_-20px_rgba(45,122,72,0.4),inset_0_2px_5px_rgba(255,255,255,0.9),inset_0_-2px_5px_rgba(0,0,0,0.05)] border border-white/60 backdrop-blur-2xl"
+                      : "bg-[#FFFFFF] shadow-[0_15px_50px_-15px_rgba(0,0,0,0.04),inset_0_1px_1px_rgba(255,255,255,1)] border border-[#EEF2EF] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.06)]"
                   }`}
                 >
-                  {/* Glare / Lighting for Center Card */}
+                  {/* GLARE EFFECT FOR CENTER CARD */}
                   {isCenter && (
-                    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[36px]">
-                      {/* Soft top-left key light */}
-                      <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#5DAA72]/30 blur-[70px]" />
-                      {/* Diagonal glass glare exactly like the reference */}
-                      <div className="absolute -right-[30%] -top-[30%] h-[200%] w-[120%] origin-bottom-left rotate-[35deg] bg-gradient-to-b from-white/15 via-white/5 to-transparent blur-[2px]" />
-                      {/* Ambient bottom glow */}
-                      <div className="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-black/10 blur-[60px]" />
+                    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[40px]">
+                      {/* Sharp diagonal glass glare exactly like screenshot-3 */}
+                      <div className="absolute -top-[30%] left-[35%] h-[160%] w-[150%] origin-top-left rotate-[22deg] bg-gradient-to-r from-white/70 via-white/10 to-transparent blur-[1px]" />
+                      {/* Edge highlight */}
+                      <div className="absolute inset-0 rounded-[40px] ring-1 ring-inset ring-white/30" />
                     </div>
                   )}
 
                   <div className="relative z-10">
-                    {/* Top Icon Badge */}
+                    {/* TOP ICON BADGE */}
                     <div
-                      className={`flex h-[76px] w-[76px] items-center justify-center rounded-full shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] transition-transform duration-[600ms] ease-out group-hover:scale-105 ${
+                      className={`flex h-[72px] w-[72px] items-center justify-center rounded-full transition-transform duration-500 group-hover:scale-105 ${
                         isCenter
-                          ? "bg-gradient-to-b from-[#FFFFFF] to-[#EEF2EF] text-[#0E5A2E]"
-                          : "bg-gradient-to-b from-[#2D7A48] to-[#0E5A2E] text-[#FFFFFF]"
+                          ? "bg-white shadow-[0_15px_35px_-5px_rgba(0,0,0,0.12)] text-[#0E5A2E]"
+                          : "bg-white border border-[#EEF2EF] shadow-[0_4px_15px_-5px_rgba(0,0,0,0.03)] text-[#0E5A2E]"
                       }`}
                     >
-                      <User className="h-8 w-8" strokeWidth={2} />
+                      <User className="h-7 w-7" strokeWidth={1.5} />
                     </div>
 
-                    {/* Title & Text */}
-                    <div className="mt-12">
+                    {/* TITLE & TEXT */}
+                    <div className="mt-10">
                       <h3
-                        className={`font-display text-[2.75rem] leading-[1.1] tracking-tight ${
-                          isCenter ? "text-white drop-shadow-sm" : "text-[#0E5A2E]"
+                        className={`font-display text-[2.5rem] leading-[1.1] tracking-tight text-[#0E5A2E] ${
+                          isCenter ? "drop-shadow-sm" : ""
                         }`}
                       >
                         {t.name}
                       </h3>
                       <p
-                        className={`mt-5 text-[16px] leading-[1.6] ${
-                          isCenter ? "text-white/85" : "text-[#0E5A2E]/70"
+                        className={`mt-4 text-[15px] leading-[1.65] text-[#0E5A2E] ${
+                          isCenter ? "opacity-90" : "opacity-60"
                         }`}
                       >
-                        &ldquo;{t.text}&rdquo;
+                        {t.text}
                       </p>
                     </div>
                   </div>
 
-                  {/* Footer Elevated Island */}
+                  {/* FOOTER CAPSULE */}
                   <div
-                    className={`relative z-10 mt-16 flex items-center justify-between rounded-[28px] p-2.5 shadow-[0_12px_40px_-10px_rgba(0,0,0,0.12)] border ${
-                      isCenter 
-                        ? "bg-white/95 backdrop-blur-xl border-white/50" 
-                        : "bg-[#FFFFFF]/95 backdrop-blur-xl border-white"
+                    className={`relative z-10 mt-12 flex items-center justify-between rounded-[24px] p-2.5 transition-all duration-500 ${
+                      isCenter
+                        ? "bg-white/95 backdrop-blur-xl shadow-[0_15px_40px_-10px_rgba(0,0,0,0.15)] border border-white/80"
+                        : "bg-white border border-[#EEF2EF] shadow-[0_5px_20px_-5px_rgba(0,0,0,0.03)]"
                     }`}
                   >
-                    {/* Left pill */}
-                    <div className="flex items-center gap-2.5 rounded-[20px] border border-[#EEF2EF] bg-[#FFFFFF] px-4 py-3 text-[11px] font-bold uppercase tracking-[0.15em] text-[#0E5A2E]/80 shadow-sm">
-                      <User className="h-4 w-4 text-[#5DAA72]" strokeWidth={2.5} />
-                      <span className="truncate max-w-[140px] sm:max-w-none">{t.role}</span>
+                    {/* LEFT PILL */}
+                    <div className="flex items-center gap-2.5 rounded-[18px] border border-[#EEF2EF] bg-white px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#0E5A2E]/80 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.02)]">
+                      <User className="h-3.5 w-3.5 text-[#0E5A2E]" strokeWidth={2.5} />
+                      <span className="truncate">{t.role}</span>
                     </div>
 
-                    {/* Right action */}
+                    {/* RIGHT ACTIONS */}
                     <div className="flex items-center gap-2">
-                      <div className="hidden sm:flex h-11 w-11 items-center justify-center rounded-[20px] border border-[#EEF2EF] bg-[#F8FAF7] text-[#0E5A2E]/40 shadow-sm">
+                      {/* Quote button */}
+                      <div className="flex h-10 w-10 items-center justify-center rounded-[18px] border border-[#EEF2EF] bg-white text-[#0E5A2E]/40 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.02)] transition-colors hover:text-[#5DAA72]">
                         <Quote className="h-4 w-4" strokeWidth={2.5} />
                       </div>
+                      
+                      {/* Star button */}
                       <div
-                        className={`flex shrink-0 items-center gap-2.5 rounded-[20px] px-6 py-3.5 text-[15px] font-bold shadow-sm transition-transform hover:-translate-y-0.5 ${
+                        className={`flex shrink-0 items-center gap-2 rounded-[18px] px-5 py-2.5 text-[14px] font-bold shadow-sm transition-transform hover:scale-105 ${
                           isCenter
-                            ? "bg-[#0E5A2E] text-[#FFFFFF] shadow-[0_8px_24px_-8px_rgba(14,90,46,0.6)]"
-                            : "bg-[#FFFFFF] text-[#0E5A2E] border border-[#EEF2EF] shadow-sm"
+                            ? "bg-[#0E5A2E] text-white shadow-[0_8px_20px_-6px_rgba(14,90,46,0.5)] border border-[#0E5A2E]"
+                            : "bg-white text-[#0E5A2E] border border-[#EEF2EF] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.02)]"
                         }`}
                       >
-                        5.0 <Star className="h-[18px] w-[18px] fill-current text-current" />
+                        <Star className="h-4 w-4 fill-[color:var(--gold)] text-[color:var(--gold)]" />
+                        5.0
                       </div>
                     </div>
                   </div>
                 </div>
-              </Reveal>
+              </div>
             );
           })}
         </div>
