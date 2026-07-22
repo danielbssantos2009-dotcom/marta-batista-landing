@@ -745,6 +745,12 @@ function Testimonials() {
 
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 bg-[#F4F7F5]">
+      {/* AMBIENT 3D BACKGROUND LIGHTING FOR GLASS REFRACTION */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-[-10%] top-[-10%] h-[70%] w-[60%] rounded-full bg-gradient-to-br from-[#8bb999]/60 to-[#3a7550]/30 blur-[140px] mix-blend-multiply opacity-70 animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute right-[-10%] bottom-[-10%] h-[80%] w-[60%] rounded-full bg-gradient-to-tl from-[#75b084]/50 to-[#2c6541]/10 blur-[150px] mix-blend-multiply opacity-60 animate-pulse" style={{ animationDuration: '12s' }} />
+      </div>
+
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
@@ -754,14 +760,14 @@ function Testimonials() {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <h2 className="mt-4 font-display text-4xl leading-tight text-[color:var(--moss)] sm:text-5xl text-balance">
+            <h2 className="mt-4 font-display text-4xl leading-tight text-[color:var(--moss)] sm:text-5xl text-balance drop-shadow-sm">
               Histórias reais de quem <em className="font-normal" style={{ color: "var(--leaf)" }}>voltou a respirar leveza</em>.
             </h2>
           </Reveal>
         </div>
 
         <Reveal delay={120}>
-          <div className="mt-16 flex flex-col gap-6 lg:flex-row lg:h-[500px]">
+          <div className="mt-16 flex flex-col gap-6 lg:flex-row lg:h-[540px]">
             {items.map((t, i) => {
               const isActive = activeIdx === i;
 
@@ -769,39 +775,52 @@ function Testimonials() {
                 <div
                   key={t.name}
                   onMouseEnter={() => setActiveIdx(i)}
-                  className={`group relative flex w-full cursor-pointer flex-col overflow-hidden rounded-[40px] bg-white/40 backdrop-blur-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,0.8)] border border-white/60 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] lg:h-full lg:w-auto ${
-                    isActive ? "lg:flex-[3] h-auto" : "lg:flex-[1] h-[300px]"
+                  className={`group relative flex w-full cursor-pointer flex-col overflow-hidden rounded-[48px] transition-all duration-[800ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] lg:h-full lg:w-auto ${
+                    isActive 
+                      ? "lg:flex-[3.2] h-auto scale-100 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-[80px] z-20" 
+                      : "lg:flex-[1] h-[300px] scale-[0.95] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10 lg:opacity-75"
                   }`}
                 >
+                  {/* SPECULAR GLARE (3D Surface Reflection) */}
+                  <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[48px]">
+                    <div 
+                      className={`absolute -right-[20%] -top-[20%] h-[150%] w-[140%] -rotate-[25deg] rounded-[100%] bg-gradient-to-b from-white/60 via-white/10 to-transparent blur-[16px] transition-opacity duration-1000 ${isActive ? 'opacity-100' : 'opacity-30'}`} 
+                    />
+                    <div className="absolute inset-0 rounded-[48px] ring-1 ring-inset ring-white/60 mix-blend-overlay" />
+                  </div>
+
                   {/* Fixed width inner container prevents text collapse during width animation on Desktop */}
                   <div 
-                    className={`relative flex h-full w-full flex-col justify-between p-8 sm:p-10 lg:absolute lg:inset-0 lg:w-[900px] transition-opacity duration-700 ${
-                      isActive ? "opacity-100" : "lg:opacity-30 opacity-100"
+                    className={`relative z-20 flex h-full w-full flex-col justify-between p-8 sm:p-12 lg:absolute lg:inset-0 lg:w-[900px] transition-all duration-[800ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+                      isActive ? "opacity-100 translate-y-0" : "lg:opacity-30 opacity-100 lg:translate-y-12 translate-y-0"
                     }`}
                   >
                     <div className="flex flex-col">
-                      <Quote className="h-10 w-10 text-[color:var(--leaf)]/40" strokeWidth={1.5} />
-                      <blockquote className="mt-6 max-w-[650px] text-lg leading-[1.8] text-[color:var(--moss)]/90">
+                      <Quote 
+                        className={`h-12 w-12 text-[color:var(--leaf)] transition-all duration-700 ${isActive ? 'scale-110 drop-shadow-md opacity-80' : 'scale-100 opacity-40'}`} 
+                        strokeWidth={1.5} 
+                      />
+                      <blockquote className="mt-8 max-w-[650px] text-[1.1rem] leading-[1.85] text-[color:var(--moss)] drop-shadow-sm font-medium">
                         {t.text}
                       </blockquote>
                     </div>
 
-                    <div className="mt-8 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-6">
+                    <div className="mt-10 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-8">
                       <div
-                        className="flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full font-display text-2xl text-cream shadow-sm"
+                        className={`flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full font-display text-3xl text-cream transition-all duration-700 ${isActive ? 'shadow-[0_15px_30px_-5px_rgba(20,80,40,0.5),inset_0_2px_5px_rgba(255,255,255,0.7)] scale-110' : 'shadow-md scale-100'}`}
                         style={{ background: "var(--gradient-cta)" }}
                       >
                         {t.name[0]}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="truncate font-display text-xl text-[color:var(--moss)]">{t.name}</div>
-                        <div className="truncate text-[11px] font-bold uppercase tracking-[0.2em] text-[color:var(--moss)]/60">
+                        <div className="truncate font-display text-2xl text-[color:var(--moss)] drop-shadow-sm">{t.name}</div>
+                        <div className="truncate text-[12px] font-extrabold uppercase tracking-[0.25em] text-[color:var(--moss)]/70 mt-1">
                           {t.role}
                         </div>
                       </div>
-                      <div className="ml-auto hidden shrink-0 text-[color:var(--gold)] sm:flex">
+                      <div className={`ml-auto hidden shrink-0 text-[color:var(--gold)] sm:flex transition-all duration-700 ${isActive ? 'opacity-100 scale-110 drop-shadow-md' : 'opacity-50 scale-100'}`}>
                         {[0, 1, 2, 3, 4].map((s) => (
-                          <Star key={s} className="h-[18px] w-[18px] fill-current" />
+                          <Star key={s} className="h-[22px] w-[22px] fill-current" />
                         ))}
                       </div>
                     </div>
