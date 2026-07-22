@@ -770,7 +770,7 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
 
-  const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
+  const springConfig = { damping: 30, stiffness: 100, mass: 0.8 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
@@ -814,8 +814,8 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
         opacity: isActive ? 1 : 0.7,
       }}
       transition={{
-        layout: { type: "spring", bounce: 0.35, duration: 1 }, 
-        scale: isActive ? { duration: 0.6 } : { repeat: Infinity, duration: 9, ease: "easeInOut" },
+        layout: { type: "spring", bounce: 0.15, duration: 1.2 }, 
+        scale: isActive ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { repeat: Infinity, duration: 9, ease: "easeInOut" },
         y: { repeat: Infinity, duration: 7, ease: "easeInOut" },
         opacity: { duration: 0.8 }
       }}
@@ -825,10 +825,10 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
         transformStyle: "preserve-3d",
         transition: "transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)"
       }}
-      className={`group relative flex w-full flex-col overflow-hidden rounded-[48px] lg:h-full lg:w-auto origin-center ${
+      className={`group relative flex w-full flex-col overflow-hidden rounded-[48px] lg:h-full lg:w-auto origin-center will-change-transform ${
         isActive
-          ? "h-auto shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-[80px] z-20"
-          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10"
+          ? "h-auto shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-2xl z-20"
+          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-md z-10"
       }`}
     >
       {/* Dynamic Mouse Tracking Glare */}
@@ -962,18 +962,18 @@ function Testimonials() {
         {/* Glow Tracking Active Card with Pulse */}
         <motion.div
           initial={false}
-          animate={{ left: `${activeIdx * 25}%`, scale: [1, 1.08, 1] }}
+          animate={{ x: `${activeIdx * 100}%`, scale: [1, 1.08, 1] }}
           transition={{ 
-            left: { type: "spring", damping: 30, stiffness: 80, delay: 0.18 },
+            x: { type: "spring", damping: 40, stiffness: 60, delay: 0.1 },
             scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
           }}
-          className="absolute top-[10%] h-[80%] w-[50%] rounded-full bg-gradient-to-br from-[#8bb999]/50 to-[#3a7550]/20 blur-[150px] mix-blend-multiply opacity-80"
+          className="absolute top-[10%] left-0 h-[80%] w-[50%] rounded-full bg-gradient-to-br from-[#8bb999]/50 to-[#3a7550]/20 blur-[120px] mix-blend-multiply opacity-70 will-change-transform"
         />
         {/* Slow Background Panning Light */}
         <motion.div
           animate={{ x: ["-20%", "20%", "-20%"] }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 bottom-0 w-full bg-gradient-to-br from-transparent via-white/40 to-transparent blur-[120px] mix-blend-overlay"
+          className="absolute top-0 bottom-0 w-full bg-gradient-to-br from-transparent via-white/40 to-transparent blur-[100px] mix-blend-overlay will-change-transform"
         />
       </div>
 
