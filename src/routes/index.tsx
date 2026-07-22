@@ -288,21 +288,38 @@ function Hero() {
       </div>
 
       {/* Trust marquee */}
-      <div className="relative z-10 border-y border-[color:var(--moss)]/10 bg-white/40 backdrop-blur-sm">
-        <div className="overflow-hidden py-5">
-          <div className="marquee flex w-max items-center gap-14 whitespace-nowrap px-6 text-sm uppercase tracking-[0.28em] text-[color:var(--moss)]/60">
+      <div className="relative z-10 py-8 overflow-hidden bg-white/20 backdrop-blur-xl border-y border-white/40 shadow-[0_0_40px_rgba(0,0,0,0.03)]">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" aria-hidden />
+        
+        <div className="relative flex flex-col gap-6">
+          {/* Marquee 1 - Left */}
+          <div className="marquee flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/75">
             {Array.from({ length: 2 }).map((_, r) => (
-              <div key={r} className="flex items-center gap-14">
-                <span>Nutrição Clínica</span>
-                <Leaf className="h-4 w-4" />
-                <span>Emagrecimento Saudável</span>
-                <Leaf className="h-4 w-4" />
-                <span>Nutrição Esportiva</span>
-                <Leaf className="h-4 w-4" />
-                <span>Saúde da Família</span>
-                <Leaf className="h-4 w-4" />
-                <span>Comportamento Alimentar</span>
-                <Leaf className="h-4 w-4" />
+              <div key={`m1-${r}`} className="flex items-center gap-10">
+                <span>Nutrição Clínica</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Emagrecimento Saudável</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Nutrição Esportiva</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Saúde da Mulher</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Comportamento Alimentar</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Performance Mental</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Qualidade de Sono</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Autonomia Alimentar</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+              </div>
+            ))}
+          </div>
+
+          {/* Marquee 2 - Right */}
+          <div className="marquee-reverse flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/75">
+            {Array.from({ length: 2 }).map((_, r) => (
+              <div key={`m2-${r}`} className="flex items-center gap-10">
+                <span>Foco & Disposição</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Reeducação Alimentar</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Nutrição Funcional</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Saúde Intestinal</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Longevidade</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Equilíbrio Metabólico</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Acompanhamento Personalizado</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
+                <span>Rotina Leve</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
               </div>
             ))}
           </div>
