@@ -747,6 +747,9 @@ function Testimonials() {
         {/* CARDS CAROUSEL */}
         <div className="relative mt-12 flex flex-col items-center justify-center gap-10 lg:-mx-12 lg:flex-row lg:gap-0">
           
+          {/* Ambient Background Glow for 3D depth */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#75b084]/40 blur-[120px]" />
+
           {items.map((t, i) => {
             const isCenter = i === 1;
 
@@ -757,31 +760,22 @@ function Testimonials() {
                   isCenter ? "z-20 lg:scale-[1.12]" : "z-10 lg:scale-[0.88] lg:opacity-90"
                 }`}
               >
-                {/* 3D LIGHT SOURCE BEHIND THE GLASS */}
-                {/* This is the secret to real glass. The blur filter needs something sharp to blur to create volume. */}
-                {isCenter && (
-                  <div className="absolute inset-8 z-0 rounded-[40px] bg-gradient-to-br from-[#8bb999] to-[#3a7550] shadow-[0_0_80px_rgba(45,122,72,0.8)]" />
-                )}
-                {!isCenter && (
-                  <div className="absolute inset-8 z-0 rounded-[40px] bg-white/60 shadow-[0_0_60px_rgba(255,255,255,0.8)]" />
-                )}
-
                 {/* 3D GLASS MATERIAL */}
                 <div
                   className={`group relative z-10 flex h-full min-h-[460px] flex-col justify-between rounded-[48px] p-10 transition-all duration-700 ${
                     isCenter
-                      ? "bg-white/10 backdrop-blur-[60px] border-[1.5px] border-white/70 shadow-[inset_0_2px_4px_rgba(255,255,255,1),inset_6px_6px_20px_rgba(255,255,255,0.7),inset_-6px_-6px_20px_rgba(0,0,0,0.05),0_40px_100px_-20px_rgba(20,80,40,0.4)]"
-                      : "bg-[#ffffff]/30 backdrop-blur-[40px] border-[1.5px] border-white/60 shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_4px_4px_15px_rgba(255,255,255,0.6),inset_-4px_-4px_15px_rgba(0,0,0,0.03),0_20px_50px_-15px_rgba(0,0,0,0.06)]"
+                      ? "bg-gradient-to-br from-white/30 via-white/10 to-[#8bb999]/10 backdrop-blur-[60px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_6px_24px_rgba(255,255,255,0.9),inset_0_-4px_16px_rgba(0,0,0,0.03),0_40px_100px_-20px_rgba(20,80,40,0.25)]"
+                      : "bg-[#ffffff]/30 backdrop-blur-[40px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.3),inset_0_4px_16px_rgba(255,255,255,0.6),inset_0_-2px_10px_rgba(0,0,0,0.02),0_20px_50px_-15px_rgba(0,0,0,0.06)]"
                   }`}
                 >
-                  {/* SPECULAR GLARE (Surface Reflection) */}
+                  {/* SPECULAR GLARE (Curved Surface Reflection) */}
                   <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[48px]">
-                    <div 
-                      className={`absolute -right-10 -top-10 rounded-full bg-white blur-[40px] ${
-                        isCenter ? "h-72 w-72 opacity-90" : "h-56 w-56 opacity-60"
-                      }`} 
-                    />
-                    <div className="absolute inset-0 rounded-[48px] ring-1 ring-inset ring-white/50 mix-blend-overlay" />
+                    {isCenter && (
+                      <div className="absolute -right-[20%] -top-[20%] h-[150%] w-[140%] -rotate-[20deg] rounded-[100%] bg-gradient-to-b from-white/40 via-white/5 to-transparent blur-[16px]" />
+                    )}
+                    {!isCenter && (
+                      <div className="absolute -right-[10%] -top-[10%] h-[100%] w-[120%] -rotate-[15deg] rounded-[100%] bg-gradient-to-b from-white/30 to-transparent blur-[12px]" />
+                    )}
                   </div>
 
                   <div className="relative z-20 flex flex-col">
@@ -789,8 +783,8 @@ function Testimonials() {
                     <div
                       className={`flex items-center justify-center rounded-full bg-white transition-transform duration-500 group-hover:scale-105 ${
                         isCenter 
-                          ? "h-[84px] w-[84px] shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)]" 
-                          : "h-[76px] w-[76px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.06)]"
+                          ? "h-[84px] w-[84px] shadow-[0_15px_35px_-5px_rgba(0,0,0,0.08),inset_0_1px_2px_rgba(255,255,255,1)]" 
+                          : "h-[76px] w-[76px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)]"
                       }`}
                     >
                       <User className={`text-[#0E5A2E] ${isCenter ? "h-9 w-9" : "h-8 w-8"}`} strokeWidth={1.5} />
@@ -817,10 +811,10 @@ function Testimonials() {
 
                   {/* FOOTER CAPSULE */}
                   <div
-                    className={`relative z-20 mt-14 flex items-center justify-between rounded-[32px] p-2.5 transition-all duration-500 bg-white/70 backdrop-blur-2xl border border-white/80 ${
+                    className={`relative z-20 mt-14 flex items-center justify-between rounded-[32px] p-2.5 transition-all duration-500 ${
                       isCenter
-                        ? "shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,1)]"
-                        : "shadow-[0_15px_35px_-10px_rgba(0,0,0,0.06),inset_0_2px_4px_rgba(255,255,255,1)]"
+                        ? "bg-white/40 backdrop-blur-2xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(255,255,255,0.5),inset_0_4px_12px_rgba(255,255,255,0.7)]"
+                        : "bg-white/50 backdrop-blur-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.04),inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_2px_8px_rgba(255,255,255,0.6)]"
                     }`}
                   >
                     {/* LEFT PILL */}
@@ -840,7 +834,7 @@ function Testimonials() {
                       <div
                         className={`flex h-[52px] shrink-0 items-center gap-2.5 rounded-[20px] px-6 text-[15px] font-bold transition-transform hover:scale-105 ${
                           isCenter
-                            ? "bg-[#0E5A2E] text-white shadow-[0_8px_20px_-4px_rgba(14,90,46,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)]"
+                            ? "bg-[#0E5A2E] text-white shadow-[0_8px_20px_-4px_rgba(14,90,46,0.5),inset_0_1px_2px_rgba(255,255,255,0.2)]"
                             : "bg-white text-[#0E5A2E] shadow-[0_5px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)]"
                         }`}
                       >
