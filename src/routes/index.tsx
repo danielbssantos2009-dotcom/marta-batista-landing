@@ -475,35 +475,39 @@ function Approach() {
           </Reveal>
         </div>
 
-        <div className="mt-20 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:pb-16">
+        <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:pb-12">
           {pillars.map((p, i) => (
-            <div key={p.title} className={`h-full ${i % 2 === 1 ? 'lg:translate-y-16' : ''}`}>
+            <div key={p.title} className={`h-full ${i % 2 === 1 ? 'lg:translate-y-10' : ''}`}>
               <Reveal delay={i * 100}>
-                <div className="group relative flex min-h-[400px] flex-col justify-between overflow-hidden rounded-[32px] bg-[#141b17] p-8 transition-all duration-700 hover:-translate-y-2 hover:shadow-float lg:min-h-[460px]">
-                  {/* Glowing abstract background inside the card */}
+                <div className="group relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[32px] glass p-7 transition-all duration-700 hover:-translate-y-2 hover:shadow-float lg:min-h-[380px]">
+                  
+                  {/* Subtle ambient glow inside the glass card */}
                   <div 
-                    className="absolute -inset-10 opacity-30 transition-all duration-700 group-hover:opacity-70 group-hover:scale-110" 
+                    className="absolute -inset-10 opacity-30 transition-all duration-700 group-hover:opacity-60 group-hover:scale-110" 
                     style={{ 
-                      background: `radial-gradient(circle at ${i % 2 === 0 ? '80% 80%' : '20% 80%'}, var(--sage) 0%, transparent 50%)`, 
-                      filter: 'blur(40px)' 
+                      background: `radial-gradient(circle at ${i % 2 === 0 ? '80% 80%' : '20% 80%'}, var(--sage) 0%, transparent 60%)`, 
+                      filter: 'blur(30px)' 
                     }} 
                   />
                   
-                  {/* Glass overlay for the noise/texture feel */}
-                  <div className="absolute inset-0 bg-[#141b17]/40 backdrop-blur-3xl" />
-                  <div className="absolute inset-0 rounded-[32px] border border-white/10" />
-
-                  <div className="relative z-10 w-max rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-[10px] font-medium uppercase tracking-widest text-white/90 backdrop-blur-md">
+                  {/* Top Pill */}
+                  <div className="relative z-10 w-max rounded-full border border-[color:var(--moss)]/10 bg-white/40 px-4 py-1.5 text-[10px] font-medium uppercase tracking-widest text-[color:var(--moss)]/80 backdrop-blur-md">
                     Princípio 0{i + 1}
                   </div>
 
-                  <div className="relative z-10 mt-auto flex flex-col gap-5">
-                    <p.icon className="h-7 w-7 text-[color:var(--sage)]" strokeWidth={1.5} />
+                  {/* Bottom Content */}
+                  <div className="relative z-10 mt-auto flex flex-col gap-4">
+                    <div 
+                      className="flex h-12 w-12 items-center justify-center rounded-2xl text-cream transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3 shadow-sm" 
+                      style={{ background: "var(--gradient-cta)" }}
+                    >
+                      <p.icon className="h-6 w-6" strokeWidth={1.8} />
+                    </div>
                     <div>
-                      <h3 className="font-display text-[26px] text-white leading-[1.1] tracking-tight">
+                      <h3 className="font-display text-2xl text-[color:var(--moss)] leading-[1.1] tracking-tight">
                         {p.title}
                       </h3>
-                      <p className="mt-4 text-sm leading-relaxed text-white/60">
+                      <p className="mt-3 text-sm leading-relaxed text-[color:var(--moss)]/70">
                         {p.text}
                       </p>
                     </div>
