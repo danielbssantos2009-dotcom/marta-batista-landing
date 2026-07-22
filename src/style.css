@@ -225,37 +225,31 @@
   animation: marquee-reverse 40s linear infinite;
 }
 
-@utility glass-testimonial-card {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(80px);
-  -webkit-backdrop-filter: blur(80px);
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+@utility glass-testimonial-side {
+  background: 
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 
-    inset 0px 2px 4px rgba(255, 255, 255, 1),
-    inset 4px 4px 15px rgba(255, 255, 255, 0.7),
-    inset -4px -4px 15px rgba(0, 0, 0, 0.03),
-    0px 30px 60px -15px rgba(0, 0, 0, 0.05);
+    inset 0px 1px 1px rgba(255, 255, 255, 0.9),
+    inset 2px 2px 10px rgba(255, 255, 255, 0.7),
+    inset -2px -2px 10px rgba(0, 0, 0, 0.03),
+    0px 20px 40px -10px rgba(0, 0, 0, 0.06);
 }
 
-@utility glass-testimonial-card-center {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(100px);
-  -webkit-backdrop-filter: blur(100px);
-  border: 1.5px solid rgba(255, 255, 255, 0.8);
+@utility glass-testimonial-center {
+  background: 
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 45%),
+    radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(135deg, rgba(163, 201, 174, 0.45) 0%, rgba(255, 255, 255, 0.15) 100%);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: 
-    inset 0px 2px 5px rgba(255, 255, 255, 1),
-    inset 6px 6px 20px rgba(255, 255, 255, 0.9),
-    inset -6px -6px 20px rgba(0, 0, 0, 0.04),
-    0px 50px 100px -20px rgba(20, 80, 40, 0.25);
-}
-
-@utility glass-testimonial-glare {
-  background: radial-gradient(
-    circle at 75% 25%,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.5) 35%,
-    transparent 65%
-  );
-  filter: blur(30px);
-  mix-blend-mode: overlay;
+    inset 0px 1px 2px rgba(255, 255, 255, 1),
+    inset 3px 3px 15px rgba(255, 255, 255, 0.8),
+    inset -3px -3px 15px rgba(0, 0, 0, 0.04),
+    0px 40px 80px -15px rgba(20, 80, 40, 0.3);
 }
