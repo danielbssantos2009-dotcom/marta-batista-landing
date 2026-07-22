@@ -18,6 +18,7 @@ import {
   Star,
   Instagram,
   Quote,
+  User,
 } from "lucide-react";
 
 import heroOrganic from "@/assets/hero-organic.jpg";
@@ -756,36 +757,83 @@ function Testimonials() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {items.map((t, i) => (
-            <Reveal key={t.name} delay={i * 120}>
-              <figure className="group relative flex h-full flex-col rounded-[28px] glass p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-float">
-                <Quote className="h-8 w-8 text-[color:var(--leaf)]/40" strokeWidth={1.5} />
-                <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-[color:var(--moss)]/85">
-                  &ldquo;{t.text}&rdquo;
-                </blockquote>
-                <div className="mt-6 flex items-center gap-3 border-t border-[color:var(--moss)]/10 pt-5">
+        <div className="relative mt-20 flex flex-col items-center justify-center gap-8 lg:-mx-10 lg:flex-row lg:gap-0">
+          {items.map((t, i) => {
+            const isCenter = i === 1;
+
+            return (
+              <Reveal
+                key={t.name}
+                delay={i * 120}
+                className={`w-full transition-all duration-700 lg:w-[40%] ${isCenter ? "z-10 lg:scale-105" : "z-0 lg:scale-[0.88] lg:opacity-75"}`}
+              >
+                <div
+                  className={`group relative flex h-full min-h-[420px] flex-col rounded-[32px] p-8 transition-all duration-700 hover:scale-[1.02] ${
+                    isCenter
+                      ? "bg-[color:var(--moss)] text-white shadow-[0_30px_60px_-15px_color-mix(in_oklab,var(--moss)_60%,transparent)]"
+                      : "glass border-y border-white/60 bg-white/60 text-[color:var(--moss)] shadow-glass hover:opacity-100"
+                  }`}
+                >
+                  {/* Top Icon Badge */}
                   <div
-                    className="flex h-11 w-11 items-center justify-center rounded-full font-display text-lg text-cream"
-                    style={{ background: "var(--gradient-cta)" }}
+                    className={`flex h-16 w-16 items-center justify-center rounded-full shadow-md ${
+                      isCenter ? "bg-white text-[color:var(--moss)]" : "bg-[color:var(--moss)] text-cream"
+                    }`}
                   >
-                    {t.name[0]}
+                    <User className="h-7 w-7" strokeWidth={1.8} />
                   </div>
-                  <div>
-                    <div className="font-medium text-[color:var(--moss)]">{t.name}</div>
-                    <div className="text-xs uppercase tracking-widest text-[color:var(--moss)]/55">
+
+                  {/* Title & Text */}
+                  <div className="mt-8">
+                    <h3
+                      className={`font-display text-4xl leading-tight tracking-tight ${
+                        isCenter ? "text-white" : "text-[color:var(--moss)]"
+                      }`}
+                    >
+                      {t.name}
+                    </h3>
+                    <p
+                      className={`mt-5 text-[15px] leading-relaxed ${
+                        isCenter ? "text-white/80" : "text-[color:var(--moss)]/75"
+                      }`}
+                    >
+                      {t.text}
+                    </p>
+                  </div>
+
+                  {/* Footer */}
+                  <div
+                    className={`mt-auto pt-8 flex items-center justify-between border-t ${
+                      isCenter ? "border-white/10" : "border-[color:var(--moss)]/10"
+                    }`}
+                  >
+                    {/* Left pill */}
+                    <div
+                      className={`flex items-center gap-2 rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-widest ${
+                        isCenter
+                          ? "border-white/20 bg-white/10 text-white"
+                          : "border-[color:var(--moss)]/10 bg-white/50 text-[color:var(--moss)]/80"
+                      }`}
+                    >
+                      <User className="h-3 w-3" strokeWidth={2.5} />
                       {t.role}
                     </div>
-                  </div>
-                  <div className="ml-auto flex text-[color:var(--gold)]">
-                    {[0, 1, 2, 3, 4].map((s) => (
-                      <Star key={s} className="h-3.5 w-3.5 fill-current" />
-                    ))}
+
+                    {/* Right button/stars */}
+                    <div
+                      className={`flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold shadow-sm transition-transform hover:scale-105 ${
+                        isCenter
+                          ? "bg-white text-[color:var(--moss)]"
+                          : "bg-[color:var(--moss)] text-white"
+                      }`}
+                    >
+                      5.0 <Star className="h-4 w-4 fill-current" />
+                    </div>
                   </div>
                 </div>
-              </figure>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
