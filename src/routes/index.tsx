@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring, useMotionTemplate } from "framer-motion";
 import {
   Leaf,
   Sparkles,
@@ -722,33 +722,194 @@ function Process() {
 }
 
 /* ================= DEPOIMENTOS ================= */
+const TESTIMONIAL_ITEMS = [
+  {
+    name: "Camila R.",
+    role: "Emagrecimento Saudável",
+    text: "“Perdi 14kg em 8 meses sem dietas restritivas e sem passar fome. A Marta não me passou apenas um cardápio, ela me ensinou a entender a comida, não a me punir com ela. Recuperei minha autoestima, minha energia para brincar com meus filhos e finalmente fiz as pazes com o espelho. É uma transformação que vai muito além do peso corporal, é liberdade.”",
+  },
+  {
+    name: "Bruna L.",
+    role: "Nutrição Esportiva",
+    text: "“Meu desempenho nos treinos mudou completamente depois que ajustamos a alimentação. Eu achava que precisava comer menos para secar, mas estava perdendo massa magra. Com o plano estratégico da Marta, ganhei massa muscular, fiquei muito mais forte e incrivelmente mais leve ao mesmo tempo. Minha recuperação muscular agora é simplesmente outra.”",
+  },
+  {
+    name: "Isabela M.",
+    role: "Saúde da Mulher",
+    text: "“Sempre sofri com dores absurdas na TPM, meu intestino nunca funcionava direito e meu sono era péssimo. Achava que era o 'normal' do meu corpo. A nutrição me mostrou que não. Minha TPM praticamente sumiu, meu intestino virou um relógio e durmo a noite toda. Sinto que finalmente entendo e respeito o funcionamento do meu corpo.”",
+  },
+];
+
+function TestimonialCard({ t, isActive, setActive, index }) {
+  // 3D Motion Tracking
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+
+  const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  const rotateX = useTransform(smoothY, [0, 1], [4, -4]);
+  const rotateY = useTransform(smoothX, [0, 1], [-4, 4]);
+
+  const glareX = useTransform(smoothX, [0, 1], ["0%", "100%"]);
+  const glareY = useTransform(smoothY, [0, 1], ["0%", "100%"]);
+  const glareBackground = useMotionTemplate`radial-gradient(circle 300px at ${glareX} ${glareY}, rgba(255,255,255,0.25), transparent 80%)`;
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isActive) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  };
+
+  return (
+    <motion.div
+      layout
+      onMouseEnter={() => setActive(index)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      animate={{
+        flex: isActive ? 3.5 : 1,
+        scale: isActive ? 1 : 0.96,
+        y: isActive ? [0, -4, 0] : 0, // Idle breathing float
+      }}
+      transition={{
+        layout: { type: "spring", bounce: 0.2, duration: 0.8 },
+        scale: { duration: 0.6, ease: [0.2, 0.8, 0.2, 1] },
+        y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
+      }}
+      style={{
+        rotateX: isActive ? rotateX : 0,
+        rotateY: isActive ? rotateY : 0,
+        transformStyle: "preserve-3d",
+      }}
+      className={`group relative flex w-full cursor-pointer flex-col overflow-hidden rounded-[48px] lg:h-full lg:w-auto origin-center ${
+        isActive
+          ? "h-auto shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-[80px] z-20"
+          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10 opacity-80"
+      }`}
+    >
+      {/* 3D Dynamic Mouse Tracking Glare */}
+      {isActive && (
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-30 rounded-[48px] mix-blend-overlay opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ background: glareBackground }}
+        />
+      )}
+
+      {/* Specific Ambient Glare (Idle Drift) */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[48px]">
+        <motion.div
+          animate={{ x: ["-10%", "10%", "-10%"] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className={`absolute -right-[20%] -top-[20%] h-[150%] w-[140%] -rotate-[25deg] rounded-[100%] bg-gradient-to-b from-white/60 via-white/10 to-transparent blur-[16px] transition-opacity duration-1000 ${
+            isActive ? "opacity-100" : "opacity-30"
+          }`}
+        />
+        <div className="absolute inset-0 rounded-[48px] ring-1 ring-inset ring-white/60 mix-blend-overlay" />
+      </div>
+
+      {/* Content Container */}
+      <div className="relative z-20 flex h-full w-full flex-col justify-between p-8 sm:p-12 lg:absolute lg:inset-0 lg:w-[900px]">
+        {/* Quote & Text */}
+        <div className="flex flex-col">
+          <motion.div
+            animate={{ rotate: isActive ? 8 : 0, scale: isActive ? 1.1 : 1, opacity: isActive ? 0.8 : 0.4 }}
+            transition={{ duration: 0.8, type: "spring" }}
+            style={{ transformOrigin: "top left" }}
+          >
+            <Quote className="h-12 w-12 text-[color:var(--leaf)] drop-shadow-md" strokeWidth={1.5} />
+          </motion.div>
+          
+          <motion.blockquote
+            initial={false}
+            animate={{ y: isActive ? 0 : 30, opacity: isActive ? 1 : 0 }}
+            transition={{ duration: 0.6, delay: isActive ? 0.15 : 0, ease: "easeOut" }}
+            className="mt-8 max-w-[650px] text-[1.1rem] leading-[1.85] text-[color:var(--moss)] drop-shadow-sm font-medium"
+          >
+            {t.text}
+          </motion.blockquote>
+        </div>
+
+        {/* Footer (Avatar, Name, Stars) */}
+        <div className="mt-10 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-8">
+          <motion.div
+            animate={isActive ? { scale: [1, 1.3, 1.1] } : { scale: 1 }}
+            transition={{ duration: 0.6, times: [0, 0.4, 1] }}
+            className={`flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full font-display text-3xl text-cream transition-all duration-700 ${
+              isActive ? "shadow-[0_15px_30px_-5px_rgba(20,80,40,0.5),inset_0_2px_5px_rgba(255,255,255,0.7)]" : "shadow-md"
+            }`}
+            style={{ background: "var(--gradient-cta)" }}
+          >
+            {t.name[0]}
+          </motion.div>
+          
+          <div className="min-w-0 flex-1">
+            <div className="truncate font-display text-2xl text-[color:var(--moss)] drop-shadow-sm">{t.name}</div>
+            <motion.div 
+              animate={{ x: isActive ? 0 : -10, opacity: isActive ? 1 : 0.7 }}
+              transition={{ duration: 0.5 }}
+              className="truncate text-[12px] font-extrabold uppercase tracking-[0.25em] text-[color:var(--moss)]/70 mt-1"
+            >
+              {t.role}
+            </motion.div>
+          </div>
+          
+          <div className="ml-auto hidden shrink-0 text-[color:var(--gold)] sm:flex">
+            {[0, 1, 2, 3, 4].map((s, starIdx) => (
+              <motion.div
+                key={s}
+                initial={false}
+                animate={{ scale: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
+                transition={{ delay: isActive ? 0.3 + starIdx * 0.08 : 0, type: "spring", stiffness: 300, damping: 20 }}
+              >
+                <Star className={`h-[22px] w-[22px] fill-current ${isActive ? "drop-shadow-md" : ""}`} />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function Testimonials() {
   const [activeIdx, setActiveIdx] = useState(0);
 
-  const items = [
-    {
-      name: "Camila R.",
-      role: "Emagrecimento Saudável",
-      text: "“Perdi 14kg em 8 meses sem dietas restritivas e sem passar fome. A Marta não me passou apenas um cardápio, ela me ensinou a entender a comida, não a me punir com ela. Recuperei minha autoestima, minha energia para brincar com meus filhos e finalmente fiz as pazes com o espelho. É uma transformação que vai muito além do peso corporal, é liberdade.”",
-    },
-    {
-      name: "Bruna L.",
-      role: "Nutrição Esportiva",
-      text: "“Meu desempenho nos treinos mudou completamente depois que ajustamos a alimentação. Eu achava que precisava comer menos para secar, mas estava perdendo massa magra. Com o plano estratégico da Marta, ganhei massa muscular, fiquei muito mais forte e incrivelmente mais leve ao mesmo tempo. Minha recuperação muscular agora é simplesmente outra.”",
-    },
-    {
-      name: "Isabela M.",
-      role: "Saúde da Mulher",
-      text: "“Sempre sofri com dores absurdas na TPM, meu intestino nunca funcionava direito e meu sono era péssimo. Achava que era o 'normal' do meu corpo. A nutrição me mostrou que não. Minha TPM praticamente sumiu, meu intestino virou um relógio e durmo a noite toda. Sinto que finalmente entendo e respeito o funcionamento do meu corpo.”",
-    },
-  ];
+  // Auto-peek "Cursor Hint" after 2 seconds
+  useEffect(() => {
+    const timer1 = setTimeout(() => setActiveIdx(2), 2000); // Open right card
+    const timer2 = setTimeout(() => setActiveIdx(0), 3200); // Revert to left card
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
 
   return (
     <section className="relative overflow-hidden py-24 sm:py-32 bg-[#F4F7F5]">
-      {/* AMBIENT 3D BACKGROUND LIGHTING FOR GLASS REFRACTION */}
+      {/* AMBIENT CONTINUOUS 3D BACKGROUND LIGHTING */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-[-10%] top-[-10%] h-[70%] w-[60%] rounded-full bg-gradient-to-br from-[#8bb999]/60 to-[#3a7550]/30 blur-[140px] mix-blend-multiply opacity-70 animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute right-[-10%] bottom-[-10%] h-[80%] w-[60%] rounded-full bg-gradient-to-tl from-[#75b084]/50 to-[#2c6541]/10 blur-[150px] mix-blend-multiply opacity-60 animate-pulse" style={{ animationDuration: '12s' }} />
+        {/* Breathing Base Glow */}
+        <motion.div
+          animate={{ scale: [1, 1.08, 1], opacity: [0.6, 0.8, 0.6] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-[10%] top-[10%] h-[70%] w-[60%] rounded-full bg-gradient-to-br from-[#8bb999]/60 to-[#3a7550]/30 blur-[140px] mix-blend-multiply"
+        />
+        {/* Slow Drifting Accent Glow */}
+        <motion.div
+          animate={{ x: ["-15%", "15%", "-15%"], y: ["0%", "10%", "0%"] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute right-[-10%] bottom-[-10%] h-[80%] w-[60%] rounded-full bg-gradient-to-tl from-[#75b084]/50 to-[#2c6541]/10 blur-[150px] mix-blend-multiply opacity-60"
+        />
       </div>
 
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
@@ -768,66 +929,15 @@ function Testimonials() {
 
         <Reveal delay={120}>
           <div className="mt-16 flex flex-col gap-6 lg:flex-row lg:h-[540px]">
-            {items.map((t, i) => {
-              const isActive = activeIdx === i;
-
-              return (
-                <div
-                  key={t.name}
-                  onMouseEnter={() => setActiveIdx(i)}
-                  className={`group relative flex w-full cursor-pointer flex-col overflow-hidden rounded-[48px] transition-all duration-[800ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] lg:h-full lg:w-auto ${
-                    isActive 
-                      ? "lg:flex-[3.2] h-auto scale-100 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-[80px] z-20" 
-                      : "lg:flex-[1] h-[300px] scale-[0.95] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-[40px] z-10 lg:opacity-75"
-                  }`}
-                >
-                  {/* SPECULAR GLARE (3D Surface Reflection) */}
-                  <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[48px]">
-                    <div 
-                      className={`absolute -right-[20%] -top-[20%] h-[150%] w-[140%] -rotate-[25deg] rounded-[100%] bg-gradient-to-b from-white/60 via-white/10 to-transparent blur-[16px] transition-opacity duration-1000 ${isActive ? 'opacity-100' : 'opacity-30'}`} 
-                    />
-                    <div className="absolute inset-0 rounded-[48px] ring-1 ring-inset ring-white/60 mix-blend-overlay" />
-                  </div>
-
-                  {/* Fixed width inner container prevents text collapse during width animation on Desktop */}
-                  <div 
-                    className={`relative z-20 flex h-full w-full flex-col justify-between p-8 sm:p-12 lg:absolute lg:inset-0 lg:w-[900px] transition-all duration-[800ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
-                      isActive ? "opacity-100 translate-y-0" : "lg:opacity-30 opacity-100 lg:translate-y-12 translate-y-0"
-                    }`}
-                  >
-                    <div className="flex flex-col">
-                      <Quote 
-                        className={`h-12 w-12 text-[color:var(--leaf)] transition-all duration-700 ${isActive ? 'scale-110 drop-shadow-md opacity-80' : 'scale-100 opacity-40'}`} 
-                        strokeWidth={1.5} 
-                      />
-                      <blockquote className="mt-8 max-w-[650px] text-[1.1rem] leading-[1.85] text-[color:var(--moss)] drop-shadow-sm font-medium">
-                        {t.text}
-                      </blockquote>
-                    </div>
-
-                    <div className="mt-10 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-8">
-                      <div
-                        className={`flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full font-display text-3xl text-cream transition-all duration-700 ${isActive ? 'shadow-[0_15px_30px_-5px_rgba(20,80,40,0.5),inset_0_2px_5px_rgba(255,255,255,0.7)] scale-110' : 'shadow-md scale-100'}`}
-                        style={{ background: "var(--gradient-cta)" }}
-                      >
-                        {t.name[0]}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="truncate font-display text-2xl text-[color:var(--moss)] drop-shadow-sm">{t.name}</div>
-                        <div className="truncate text-[12px] font-extrabold uppercase tracking-[0.25em] text-[color:var(--moss)]/70 mt-1">
-                          {t.role}
-                        </div>
-                      </div>
-                      <div className={`ml-auto hidden shrink-0 text-[color:var(--gold)] sm:flex transition-all duration-700 ${isActive ? 'opacity-100 scale-110 drop-shadow-md' : 'opacity-50 scale-100'}`}>
-                        {[0, 1, 2, 3, 4].map((s) => (
-                          <Star key={s} className="h-[22px] w-[22px] fill-current" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {TESTIMONIAL_ITEMS.map((t, i) => (
+              <TestimonialCard
+                key={t.name}
+                t={t}
+                index={i}
+                isActive={activeIdx === i}
+                setActive={setActiveIdx}
+              />
+            ))}
           </div>
         </Reveal>
       </div>
