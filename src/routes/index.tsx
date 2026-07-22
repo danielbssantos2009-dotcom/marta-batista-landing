@@ -712,17 +712,7 @@ function Process() {
                 </div>
                 <h3 className="relative mt-4 font-display text-xl text-[color:var(--moss)]">{s.title}</h3>
                 <p className="relative mt-2 text-sm leading-relaxed text-[color:var(--moss)]/70">{s.text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ================= DEPOIMENTOS ================= */
-function Testimonials() {
+ function Testimonials() {
   const items = [
     {
       name: "Camila R.",
@@ -737,27 +727,27 @@ function Testimonials() {
     {
       name: "Isabela M.",
       role: "Saúde da mulher",
-      text: "Minha TPM, meu intestino e meu sono melhoraram muito. Sinto que finalmente entendo o meu corpo.",
+      text: "Minha TPM, meu intestino e meu sono melhoraram muito. Sinto que finalmente entendi o meu corpo.",
     },
   ];
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section className="relative overflow-hidden py-32 bg-[#F8FAF7]">
+      <div className="mx-auto max-w-[1400px] px-6 sm:px-12">
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
-              <span className="h-px w-8 bg-[color:var(--leaf)]" /> Depoimentos
-              <span className="h-px w-8 bg-[color:var(--leaf)]" />
+            <div className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#0E5A2E]">
+              <span className="h-px w-8 bg-[#0E5A2E]/30" /> Depoimentos
+              <span className="h-px w-8 bg-[#0E5A2E]/30" />
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <h2 className="mt-4 font-display text-4xl leading-tight text-[color:var(--moss)] sm:text-5xl text-balance">
-              Histórias reais de quem <em className="font-normal" style={{ color: "var(--leaf)" }}>voltou a respirar leveza</em>.
+            <h2 className="mt-5 font-display text-[2.75rem] leading-[1.1] tracking-tight text-[#0E5A2E] sm:text-6xl text-balance">
+              Histórias reais de quem <em className="font-normal text-[#5DAA72] italic">voltou a respirar leveza</em>.
             </h2>
           </Reveal>
         </div>
 
-        <div className="relative mt-24 flex flex-col items-center justify-center gap-10 lg:-mx-16 lg:flex-row lg:gap-0">
+        <div className="relative mt-24 flex flex-col items-center justify-center gap-10 lg:-mx-12 lg:flex-row lg:gap-0">
           {items.map((t, i) => {
             const isCenter = i === 1;
 
@@ -765,46 +755,53 @@ function Testimonials() {
               <Reveal
                 key={t.name}
                 delay={i * 120}
-                className={`w-full transition-all duration-700 lg:w-[42%] ${isCenter ? "z-20 lg:scale-[1.08]" : "z-0 lg:scale-[0.85] lg:opacity-75"}`}
+                className={`w-full transition-all duration-[900ms] ease-[cubic-bezier(0.23,1,0.32,1)] lg:w-[42%] ${
+                  isCenter ? "z-20 lg:scale-[1.06]" : "z-0 lg:scale-[0.88] lg:opacity-85"
+                }`}
               >
                 <div
-                  className={`group relative flex h-full min-h-[420px] flex-col justify-between rounded-[32px] p-6 sm:p-8 transition-all duration-700 hover:scale-[1.02] ${
+                  className={`group relative flex h-full min-h-[460px] flex-col justify-between rounded-[36px] p-8 sm:p-10 transition-all duration-[800ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${
                     isCenter
-                      ? "bg-gradient-to-br from-[#3b5e45] via-[color:var(--moss)] to-[#152419] text-white shadow-[0_40px_80px_-20px_color-mix(in_oklab,var(--moss)_80%,transparent)] border border-white/15"
-                      : "bg-white/70 backdrop-blur-2xl border border-white text-[color:var(--moss)] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] hover:opacity-100 hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.08)]"
+                      ? "bg-gradient-to-br from-[#2D7A48] to-[#0E5A2E] shadow-[0_40px_100px_-20px_rgba(14,90,46,0.6),inset_0_1px_1px_rgba(255,255,255,0.4)] border border-white/20"
+                      : "bg-[#FFFFFF]/70 backdrop-blur-[40px] border border-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,1)] hover:opacity-100 hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.1)] hover:bg-[#FFFFFF]/90"
                   }`}
                 >
                   {/* Glare / Lighting for Center Card */}
                   {isCenter && (
-                    <>
-                      <div className="absolute inset-0 rounded-[32px] bg-gradient-to-bl from-white/30 via-white/0 to-transparent pointer-events-none" />
-                      <div className="absolute -top-10 -right-10 h-64 w-64 bg-white/10 blur-[60px] rounded-full pointer-events-none" />
-                      <div className="absolute bottom-0 left-0 h-40 w-40 bg-[color:var(--leaf)]/20 blur-[50px] rounded-full pointer-events-none" />
-                    </>
+                    <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[36px]">
+                      {/* Soft top-left key light */}
+                      <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#5DAA72]/30 blur-[70px]" />
+                      {/* Diagonal glass glare exactly like the reference */}
+                      <div className="absolute -right-[30%] -top-[30%] h-[200%] w-[120%] origin-bottom-left rotate-[35deg] bg-gradient-to-b from-white/15 via-white/5 to-transparent blur-[2px]" />
+                      {/* Ambient bottom glow */}
+                      <div className="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-black/10 blur-[60px]" />
+                    </div>
                   )}
 
                   <div className="relative z-10">
                     {/* Top Icon Badge */}
                     <div
-                      className={`flex h-16 w-16 items-center justify-center rounded-full shadow-lg transition-transform duration-500 group-hover:scale-110 ${
-                        isCenter ? "bg-white text-[color:var(--moss)] shadow-[0_15px_30px_-10px_rgba(255,255,255,0.4)]" : "bg-[color:var(--gradient-cta)] text-cream shadow-[0_10px_20px_-10px_color-mix(in_oklab,var(--leaf)_60%,transparent)]"
+                      className={`flex h-[76px] w-[76px] items-center justify-center rounded-full shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] transition-transform duration-[600ms] ease-out group-hover:scale-105 ${
+                        isCenter
+                          ? "bg-gradient-to-b from-[#FFFFFF] to-[#EEF2EF] text-[#0E5A2E]"
+                          : "bg-gradient-to-b from-[#2D7A48] to-[#0E5A2E] text-[#FFFFFF]"
                       }`}
                     >
-                      <User className="h-7 w-7" strokeWidth={1.8} />
+                      <User className="h-8 w-8" strokeWidth={2} />
                     </div>
 
                     {/* Title & Text */}
-                    <div className="mt-8">
+                    <div className="mt-12">
                       <h3
-                        className={`font-display text-4xl leading-tight tracking-tight ${
-                          isCenter ? "text-white drop-shadow-sm" : "text-[color:var(--moss)]"
+                        className={`font-display text-[2.75rem] leading-[1.1] tracking-tight ${
+                          isCenter ? "text-white drop-shadow-sm" : "text-[#0E5A2E]"
                         }`}
                       >
                         {t.name}
                       </h3>
                       <p
-                        className={`mt-4 text-[15px] leading-relaxed ${
-                          isCenter ? "text-white/85" : "text-[color:var(--moss)]/70"
+                        className={`mt-5 text-[16px] leading-[1.6] ${
+                          isCenter ? "text-white/85" : "text-[#0E5A2E]/70"
                         }`}
                       >
                         &ldquo;{t.text}&rdquo;
@@ -814,30 +811,43 @@ function Testimonials() {
 
                   {/* Footer Elevated Island */}
                   <div
-                    className="relative z-10 mt-10 flex items-center justify-between rounded-[20px] bg-white p-3 shadow-[0_8px_30px_-10px_rgba(0,0,0,0.12)] border border-[color:var(--moss)]/5"
+                    className={`relative z-10 mt-16 flex items-center justify-between rounded-[28px] p-2.5 shadow-[0_12px_40px_-10px_rgba(0,0,0,0.12)] border ${
+                      isCenter 
+                        ? "bg-white/95 backdrop-blur-xl border-white/50" 
+                        : "bg-[#FFFFFF]/95 backdrop-blur-xl border-white"
+                    }`}
                   >
                     {/* Left pill */}
-                    <div className="flex items-center gap-2 rounded-xl border border-[color:var(--moss)]/10 bg-[color:var(--moss)]/5 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-[color:var(--moss)]">
-                      <User className="h-3.5 w-3.5 text-[color:var(--leaf)]" strokeWidth={2.5} />
-                      <span className="truncate max-w-[120px] sm:max-w-none">{t.role}</span>
+                    <div className="flex items-center gap-2.5 rounded-[20px] border border-[#EEF2EF] bg-[#FFFFFF] px-4 py-3 text-[11px] font-bold uppercase tracking-[0.15em] text-[#0E5A2E]/80 shadow-sm">
+                      <User className="h-4 w-4 text-[#5DAA72]" strokeWidth={2.5} />
+                      <span className="truncate max-w-[140px] sm:max-w-none">{t.role}</span>
                     </div>
 
                     {/* Right action */}
                     <div className="flex items-center gap-2">
-                      <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--moss)]/10 bg-[color:var(--moss)]/5 text-[color:var(--moss)]">
-                        <Quote className="h-4 w-4" strokeWidth={2} />
+                      <div className="hidden sm:flex h-11 w-11 items-center justify-center rounded-[20px] border border-[#EEF2EF] bg-[#F8FAF7] text-[#0E5A2E]/40 shadow-sm">
+                        <Quote className="h-4 w-4" strokeWidth={2.5} />
                       </div>
                       <div
-                        className={`flex shrink-0 items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold shadow-sm transition-transform hover:-translate-y-0.5 ${
+                        className={`flex shrink-0 items-center gap-2.5 rounded-[20px] px-6 py-3.5 text-[15px] font-bold shadow-sm transition-transform hover:-translate-y-0.5 ${
                           isCenter
-                            ? "bg-[color:var(--moss)] text-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--moss)_60%,transparent)]"
-                            : "bg-white text-[color:var(--moss)] border border-[color:var(--moss)]/15"
+                            ? "bg-[#0E5A2E] text-[#FFFFFF] shadow-[0_8px_24px_-8px_rgba(14,90,46,0.6)]"
+                            : "bg-[#FFFFFF] text-[#0E5A2E] border border-[#EEF2EF] shadow-sm"
                         }`}
                       >
-                        <Star className="h-4 w-4 fill-[color:var(--gold)] text-[color:var(--gold)]" />
-                        5.0
+                        5.0 <Star className="h-[18px] w-[18px] fill-current text-current" />
                       </div>
                     </div>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}           </div>
                   </div>
                 </div>
               </Reveal>
