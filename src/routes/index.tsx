@@ -288,12 +288,10 @@ function Hero() {
       </div>
 
       {/* Trust marquee */}
-      <div className="relative z-10 py-8 overflow-hidden bg-white/20 backdrop-blur-xl border-y border-white/40 shadow-[0_0_40px_rgba(0,0,0,0.03)]">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" aria-hidden />
-        
-        <div className="relative flex flex-col gap-6">
-          {/* Marquee 1 - Left */}
-          <div className="marquee flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/75">
+      <div className="relative z-10 flex h-48 w-full flex-col items-center justify-center overflow-hidden">
+        {/* Ribbon 1 - Left */}
+        <div className="absolute top-1/2 left-1/2 z-10 flex w-[105%] -translate-x-1/2 -translate-y-1/2 -rotate-2 flex-col border-y border-white/80 bg-white/60 py-4 shadow-[0_20px_40px_-20px_color-mix(in_oklab,var(--moss)_30%,transparent)] backdrop-blur-xl">
+          <div className="marquee flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/80">
             {Array.from({ length: 2 }).map((_, r) => (
               <div key={`m1-${r}`} className="flex items-center gap-10">
                 <span>Nutrição Clínica</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
@@ -307,9 +305,11 @@ function Hero() {
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Marquee 2 - Right */}
-          <div className="marquee-reverse flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/75">
+        {/* Ribbon 2 - Right */}
+        <div className="absolute top-1/2 left-1/2 z-0 mt-6 flex w-[105%] -translate-x-1/2 -translate-y-1/2 rotate-2 flex-col border-y border-white/50 bg-white/30 py-4 shadow-[0_20px_40px_-20px_color-mix(in_oklab,var(--moss)_20%,transparent)] backdrop-blur-md">
+          <div className="marquee-reverse flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/70">
             {Array.from({ length: 2 }).map((_, r) => (
               <div key={`m2-${r}`} className="flex items-center gap-10">
                 <span>Foco & Disposição</span><Leaf className="h-3.5 w-3.5 text-[color:var(--leaf)]/60" />
