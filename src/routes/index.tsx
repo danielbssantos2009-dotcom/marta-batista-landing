@@ -288,9 +288,9 @@ function Hero() {
       </div>
 
       {/* Trust marquee */}
-      <div className="relative z-10 flex h-48 w-full flex-col items-center justify-center overflow-hidden">
+      <div className="relative z-10 flex w-[105%] left-1/2 -translate-x-1/2 flex-col items-center justify-center overflow-hidden py-10">
         {/* Ribbon 1 - Left */}
-        <div className="absolute top-1/2 left-1/2 z-10 flex w-[105%] -translate-x-1/2 -translate-y-1/2 -rotate-2 flex-col border-y border-white/80 bg-white/60 py-4 shadow-[0_20px_40px_-20px_color-mix(in_oklab,var(--moss)_30%,transparent)] backdrop-blur-xl">
+        <div className="relative z-10 flex w-full flex-col border-y border-white/90 bg-white/60 py-4 shadow-[0_20px_40px_-15px_color-mix(in_oklab,var(--moss)_40%,transparent)] backdrop-blur-xl">
           <div className="marquee flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/80">
             {Array.from({ length: 2 }).map((_, r) => (
               <div key={`m1-${r}`} className="flex items-center gap-10">
@@ -308,7 +308,7 @@ function Hero() {
         </div>
 
         {/* Ribbon 2 - Right */}
-        <div className="absolute top-1/2 left-1/2 z-0 mt-6 flex w-[105%] -translate-x-1/2 -translate-y-1/2 rotate-2 flex-col border-y border-white/50 bg-white/30 py-4 shadow-[0_20px_40px_-20px_color-mix(in_oklab,var(--moss)_20%,transparent)] backdrop-blur-md">
+        <div className="relative z-0 flex w-full flex-col border-b border-white/50 bg-white/30 py-4 shadow-[0_15px_40px_-15px_color-mix(in_oklab,var(--moss)_20%,transparent)] backdrop-blur-md">
           <div className="marquee-reverse flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/70">
             {Array.from({ length: 2 }).map((_, r) => (
               <div key={`m2-${r}`} className="flex items-center gap-10">
