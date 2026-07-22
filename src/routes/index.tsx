@@ -754,22 +754,43 @@ function Testimonials() {
               <div
                 key={t.name}
                 className={`relative w-full transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] lg:w-[38%] ${
-                  isCenter ? "z-20 lg:scale-[1.15]" : "z-10 lg:scale-[0.88] lg:opacity-90"
+                  isCenter ? "z-20 lg:scale-[1.12]" : "z-10 lg:scale-[0.88] lg:opacity-90"
                 }`}
               >
-                {/* 3D CARD BODY */}
+                {/* 3D LIGHT SOURCE BEHIND THE GLASS */}
+                {/* This is the secret to real glass. The blur filter needs something sharp to blur to create volume. */}
+                {isCenter && (
+                  <div className="absolute inset-8 z-0 rounded-[40px] bg-gradient-to-br from-[#8bb999] to-[#3a7550] shadow-[0_0_80px_rgba(45,122,72,0.8)]" />
+                )}
+                {!isCenter && (
+                  <div className="absolute inset-8 z-0 rounded-[40px] bg-white/60 shadow-[0_0_60px_rgba(255,255,255,0.8)]" />
+                )}
+
+                {/* 3D GLASS MATERIAL */}
                 <div
-                  className={`group relative flex h-full min-h-[460px] flex-col justify-between rounded-[48px] p-10 transition-all duration-700 ${
-                    isCenter ? "glass-testimonial-center" : "glass-testimonial-side"
+                  className={`group relative z-10 flex h-full min-h-[460px] flex-col justify-between rounded-[48px] p-10 transition-all duration-700 ${
+                    isCenter
+                      ? "bg-white/10 backdrop-blur-[60px] border-[1.5px] border-white/70 shadow-[inset_0_2px_4px_rgba(255,255,255,1),inset_6px_6px_20px_rgba(255,255,255,0.7),inset_-6px_-6px_20px_rgba(0,0,0,0.05),0_40px_100px_-20px_rgba(20,80,40,0.4)]"
+                      : "bg-[#ffffff]/30 backdrop-blur-[40px] border-[1.5px] border-white/60 shadow-[inset_0_2px_4px_rgba(255,255,255,0.9),inset_4px_4px_15px_rgba(255,255,255,0.6),inset_-4px_-4px_15px_rgba(0,0,0,0.03),0_20px_50px_-15px_rgba(0,0,0,0.06)]"
                   }`}
                 >
-                  <div className="relative z-10 flex flex-col">
+                  {/* SPECULAR GLARE (Surface Reflection) */}
+                  <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[48px]">
+                    <div 
+                      className={`absolute -right-10 -top-10 rounded-full bg-white blur-[40px] ${
+                        isCenter ? "h-72 w-72 opacity-90" : "h-56 w-56 opacity-60"
+                      }`} 
+                    />
+                    <div className="absolute inset-0 rounded-[48px] ring-1 ring-inset ring-white/50 mix-blend-overlay" />
+                  </div>
+
+                  <div className="relative z-20 flex flex-col">
                     {/* TOP AVATAR BADGE */}
                     <div
                       className={`flex items-center justify-center rounded-full bg-white transition-transform duration-500 group-hover:scale-105 ${
                         isCenter 
-                          ? "h-[84px] w-[84px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.08)]" 
-                          : "h-[76px] w-[76px] shadow-[0_10px_20px_-5px_rgba(0,0,0,0.05)]"
+                          ? "h-[84px] w-[84px] shadow-[0_15px_35px_-5px_rgba(0,0,0,0.1)]" 
+                          : "h-[76px] w-[76px] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.06)]"
                       }`}
                     >
                       <User className={`text-[#0E5A2E] ${isCenter ? "h-9 w-9" : "h-8 w-8"}`} strokeWidth={1.5} />
@@ -796,14 +817,14 @@ function Testimonials() {
 
                   {/* FOOTER CAPSULE */}
                   <div
-                    className={`relative z-10 mt-14 flex items-center justify-between rounded-[32px] p-2 transition-all duration-500 bg-white/50 backdrop-blur-2xl border border-white/60 ${
+                    className={`relative z-20 mt-14 flex items-center justify-between rounded-[32px] p-2.5 transition-all duration-500 bg-white/70 backdrop-blur-2xl border border-white/80 ${
                       isCenter
-                        ? "shadow-[0_15px_35px_-10px_rgba(0,0,0,0.08)]"
-                        : "shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)]"
+                        ? "shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(255,255,255,1)]"
+                        : "shadow-[0_15px_35px_-10px_rgba(0,0,0,0.06),inset_0_2px_4px_rgba(255,255,255,1)]"
                     }`}
                   >
                     {/* LEFT PILL */}
-                    <div className="flex items-center gap-3 rounded-[24px] bg-white px-5 py-4 shadow-[0_4px_10px_-2px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,1)]">
+                    <div className="flex items-center gap-3 rounded-[24px] bg-white px-5 py-4 shadow-[0_5px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)]">
                       <User className="h-[16px] w-[16px] text-[#0E5A2E]" strokeWidth={2.5} />
                       <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#0E5A2E]">{t.role}</span>
                     </div>
@@ -811,7 +832,7 @@ function Testimonials() {
                     {/* RIGHT ACTIONS */}
                     <div className="flex items-center gap-2">
                       {/* Quote Button */}
-                      <div className="flex h-[52px] w-[52px] items-center justify-center rounded-[20px] bg-white text-[#0E5A2E]/50 shadow-[0_4px_10px_-2px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,1)] transition-colors hover:text-[#5DAA72]">
+                      <div className="flex h-[52px] w-[52px] items-center justify-center rounded-[20px] bg-white text-[#0E5A2E]/50 shadow-[0_5px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)] transition-colors hover:text-[#5DAA72]">
                         <Quote className="h-5 w-5" strokeWidth={2.5} />
                       </div>
                       
@@ -819,8 +840,8 @@ function Testimonials() {
                       <div
                         className={`flex h-[52px] shrink-0 items-center gap-2.5 rounded-[20px] px-6 text-[15px] font-bold transition-transform hover:scale-105 ${
                           isCenter
-                            ? "bg-[#0E5A2E] text-white shadow-[0_8px_15px_-3px_rgba(14,90,46,0.5)]"
-                            : "bg-white text-[#0E5A2E] shadow-[0_4px_10px_-2px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,1)]"
+                            ? "bg-[#0E5A2E] text-white shadow-[0_8px_20px_-4px_rgba(14,90,46,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)]"
+                            : "bg-white text-[#0E5A2E] shadow-[0_5px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,1)]"
                         }`}
                       >
                         <Star className="h-[18px] w-[18px] fill-[#F5C518] text-[#F5C518]" />
