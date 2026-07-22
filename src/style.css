@@ -224,3 +224,38 @@
 @utility marquee-reverse {
   animation: marquee-reverse 40s linear infinite;
 }
+
+@utility glass-testimonial-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(80px);
+  -webkit-backdrop-filter: blur(80px);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    inset 0px 2px 4px rgba(255, 255, 255, 1),
+    inset 4px 4px 15px rgba(255, 255, 255, 0.7),
+    inset -4px -4px 15px rgba(0, 0, 0, 0.03),
+    0px 30px 60px -15px rgba(0, 0, 0, 0.05);
+}
+
+@utility glass-testimonial-card-center {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    inset 0px 2px 5px rgba(255, 255, 255, 1),
+    inset 6px 6px 20px rgba(255, 255, 255, 0.9),
+    inset -6px -6px 20px rgba(0, 0, 0, 0.04),
+    0px 50px 100px -20px rgba(20, 80, 40, 0.25);
+}
+
+@utility glass-testimonial-glare {
+  background: radial-gradient(
+    circle at 75% 25%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.5) 35%,
+    transparent 65%
+  );
+  filter: blur(30px);
+  mix-blend-mode: overlay;
+}
