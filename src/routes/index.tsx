@@ -332,13 +332,10 @@ function Hero() {
 
 /* ================= SOBRE ================= */
 function ScrollWord({ word, progress, range }: { word: string, progress: any, range: [number, number] }) {
-  const opacity = useTransform(progress, range, [0.15, 1]);
-  const blurRaw = useTransform(progress, range, [4, 0]);
-  const filter = useMotionTemplate`blur(${blurRaw}px)`;
-  const color = useTransform(progress, range, ["#a1a1aa", "#3f3f46"]); // gray-400 to zinc-700
+  const opacity = useTransform(progress, range, [0.25, 1]);
   
   return (
-    <motion.span style={{ opacity, filter, color }} className="inline-block">
+    <motion.span style={{ opacity }} className="inline-block text-[#3f3f46]">
       {word}
     </motion.span>
   );
