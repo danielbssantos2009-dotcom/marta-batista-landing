@@ -19,6 +19,8 @@ import {
   Instagram,
   Quote,
   User,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 import heroOrganic from "@/assets/hero-organic.jpg";
@@ -870,7 +872,7 @@ const Particles = () => {
   );
 };
 
-function TestimonialCard({ t, isActive, index, activeIdx }) {
+function TestimonialCard({ t, isActive, index, activeIdx }: any) {
   // 3D Motion Tracking
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -930,21 +932,21 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
         transformStyle: "preserve-3d",
         transition: "transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)"
       }}
-      className={`group relative flex w-full flex-col overflow-hidden rounded-[48px] lg:h-full lg:w-auto origin-center will-change-transform ${
+      className={`group relative w-full flex-col overflow-hidden rounded-[32px] lg:rounded-[48px] lg:h-full lg:w-auto origin-center will-change-transform ${
         isActive
-          ? "h-auto shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-2xl z-20"
-          : "h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-md z-10"
+          ? "flex h-auto shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6),inset_0_12px_35px_rgba(255,255,255,0.9),inset_0_-5px_20px_rgba(0,0,0,0.06),0_60px_120px_-20px_rgba(20,80,40,0.35)] bg-gradient-to-br from-white/60 via-white/30 to-[#8bb999]/20 backdrop-blur-2xl z-20"
+          : "hidden lg:flex h-[300px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.4),inset_0_4px_15px_rgba(255,255,255,0.7),inset_0_-2px_10px_rgba(0,0,0,0.03),0_20px_50px_-10px_rgba(20,80,40,0.15)] bg-white/40 backdrop-blur-md z-10"
       }`}
     >
       {/* Dynamic Mouse Tracking Glare */}
       {isActive && (
         <motion.div
-          className="pointer-events-none absolute inset-0 z-30 rounded-[48px] mix-blend-overlay opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 z-30 rounded-[32px] lg:rounded-[48px] mix-blend-overlay opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{ background: glareBackground }}
         />
       )}
 
-      {/* Drifting Glass Reflection (Reflexo andando) */}
+      {/* Drifting Glass Reflection */}
       <motion.div
         animate={{ left: ["-150%", "250%"] }}
         transition={{ duration: isActive ? 5 : 15, repeat: Infinity, ease: "linear", delay: isActive ? 0.65 : 0 }}
@@ -952,7 +954,7 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
       />
 
       {/* Content Container */}
-      <div className="relative z-20 flex h-full w-full flex-col justify-between p-8 sm:p-12 lg:absolute lg:inset-0 lg:w-[900px]">
+      <div className="relative z-20 flex h-full w-full flex-col justify-between p-7 sm:p-12 lg:absolute lg:inset-0 lg:w-[900px]">
         {/* Quote & Text */}
         <div className="flex flex-col">
           <motion.div
@@ -961,26 +963,26 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
             transition={{ duration: 0.8, delay: isActive ? 0.15 : 0, type: "spring", y: { repeat: Infinity, duration: 4, ease: "easeInOut" } }}
             style={{ transformOrigin: "top left" }}
           >
-            <Quote className="h-12 w-12 text-[color:var(--leaf)] drop-shadow-md" strokeWidth={1.5} />
+            <Quote className="h-8 w-8 lg:h-12 lg:w-12 text-[color:var(--leaf)] drop-shadow-md" strokeWidth={1.5} />
           </motion.div>
           
           <motion.blockquote
             initial={false}
-            animate={{ y: isActive ? 0 : 40, opacity: isActive ? 1 : 0 }}
+            animate={{ y: isActive ? 0 : 30, opacity: isActive ? 1 : 0 }}
             transition={{ duration: 0.8, delay: isActive ? 0.35 : 0, type: "spring", bounce: 0.2 }}
-            className="mt-8 max-w-[650px] text-[1.1rem] leading-[1.85] text-[color:var(--moss)] drop-shadow-sm font-medium"
+            className="mt-6 lg:mt-8 max-w-[650px] text-[0.95rem] lg:text-[1.1rem] leading-[1.7] lg:leading-[1.85] text-[color:var(--moss)] drop-shadow-sm font-medium"
           >
             {t.text}
           </motion.blockquote>
         </div>
 
         {/* Footer (Avatar, Name, Stars) */}
-        <div className="mt-10 flex max-w-[650px] items-center gap-5 border-t border-[color:var(--moss)]/10 pt-8">
+        <div className="mt-8 lg:mt-10 flex max-w-[650px] items-center gap-4 lg:gap-5 border-t border-[color:var(--moss)]/10 pt-6 lg:pt-8">
           <motion.div
             initial={false}
             animate={isActive ? { scale: [1, 1.25, 1.1] } : { scale: 1 }}
             transition={{ duration: 0.8, delay: isActive ? 0.5 : 0, type: "spring" }}
-            className={`flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full font-display text-3xl text-cream transition-all duration-700 ${
+            className={`flex h-[48px] w-[48px] lg:h-[64px] lg:w-[64px] shrink-0 items-center justify-center rounded-full font-display text-xl lg:text-3xl text-cream transition-all duration-700 ${
               isActive ? "shadow-[0_15px_30px_-5px_rgba(20,80,40,0.5),inset_0_2px_5px_rgba(255,255,255,0.7)]" : "shadow-md"
             }`}
             style={{ background: "var(--gradient-cta)" }}
@@ -993,7 +995,7 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
                initial={false}
                animate={{ x: isActive ? 0 : -10, opacity: isActive ? 1 : 0.7 }}
                transition={{ duration: 0.6, delay: isActive ? 0.2 : 0 }}
-               className="truncate font-display text-2xl text-[color:var(--moss)] drop-shadow-sm"
+               className="truncate font-display text-xl lg:text-2xl text-[color:var(--moss)] drop-shadow-sm"
             >
                {t.name}
             </motion.div>
@@ -1001,7 +1003,7 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
               initial={false}
               animate={{ x: isActive ? 0 : -15, opacity: isActive ? 1 : 0.6 }}
               transition={{ duration: 0.6, delay: isActive ? 0.25 : 0 }}
-              className="truncate text-[12px] font-extrabold uppercase tracking-[0.25em] text-[color:var(--moss)]/70 mt-1"
+              className="truncate text-[10px] lg:text-[12px] font-extrabold uppercase tracking-[0.25em] text-[color:var(--moss)]/70 mt-0.5 lg:mt-1"
             >
               {t.role}
             </motion.div>
@@ -1015,7 +1017,7 @@ function TestimonialCard({ t, isActive, index, activeIdx }) {
                 animate={{ scale: isActive ? [0, 1.3, 1] : 0, opacity: isActive ? 1 : 0 }}
                 transition={{ delay: isActive ? 0.42 + starIdx * 0.08 : 0, duration: 0.5, type: "spring", bounce: 0.6 }}
               >
-                <Star className={`h-[22px] w-[22px] fill-current ${isActive ? "drop-shadow-md" : ""}`} />
+                <Star className={`h-[18px] w-[18px] lg:h-[22px] lg:w-[22px] fill-current ${isActive ? "drop-shadow-md" : ""}`} />
               </motion.div>
             ))}
           </div>
@@ -1083,19 +1085,49 @@ function Testimonials() {
       </div>
 
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
-              <motion.span animate={{ width: ["2rem", "1rem", "2rem"] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="h-px bg-[color:var(--leaf)]" />
-              Depoimentos
-              <motion.span animate={{ width: ["2rem", "1rem", "2rem"] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="h-px bg-[color:var(--leaf)]" />
-            </div>
-          </Reveal>
-          <Reveal delay={80}>
-            <h2 className="mt-4 font-display text-4xl leading-tight text-[color:var(--moss)] sm:text-5xl text-balance drop-shadow-sm">
-              Histórias reais de quem <em className="font-normal" style={{ color: "var(--leaf)" }}>voltou a respirar leveza</em>.
-            </h2>
-          </Reveal>
+        <div className="mx-auto max-w-2xl text-center lg:text-left flex flex-col justify-between items-center relative">
+          <div>
+            <Reveal>
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
+                <motion.span animate={{ width: ["2rem", "1rem", "2rem"] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="h-px bg-[color:var(--leaf)]" />
+                Depoimentos
+                <motion.span animate={{ width: ["2rem", "1rem", "2rem"] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="h-px bg-[color:var(--leaf)] lg:hidden" />
+              </div>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-4 font-display text-4xl leading-tight text-[color:var(--moss)] sm:text-5xl text-balance drop-shadow-sm">
+                Histórias reais de quem <em className="font-normal" style={{ color: "var(--leaf)" }}>voltou a respirar leveza</em>.
+              </h2>
+            </Reveal>
+          </div>
+
+          {/* Mobile Arrows */}
+          <div className="flex w-full justify-end lg:hidden mt-6 mb-[-1rem] relative z-20">
+            <Reveal delay={120} className="flex items-center gap-2">
+              <button 
+                onClick={() => {
+                  setActiveIdx((prev) => (prev === 0 ? TESTIMONIAL_ITEMS.length - 1 : prev - 1));
+                  isHovered.current = true; // Pause autoplay briefly when interacted
+                  setTimeout(() => { isHovered.current = false }, 3000);
+                }}
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--moss)]/5 text-[color:var(--moss)]/80 hover:bg-[color:var(--leaf)]/10 hover:text-[color:var(--leaf)] transition-colors"
+                aria-label="Depoimento anterior"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button 
+                onClick={() => {
+                  setActiveIdx((prev) => (prev + 1) % TESTIMONIAL_ITEMS.length);
+                  isHovered.current = true;
+                  setTimeout(() => { isHovered.current = false }, 3000);
+                }}
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--moss)]/5 text-[color:var(--moss)]/80 hover:bg-[color:var(--leaf)]/10 hover:text-[color:var(--leaf)] transition-colors"
+                aria-label="Próximo depoimento"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </Reveal>
+          </div>
         </div>
 
         <Reveal delay={120}>
