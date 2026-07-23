@@ -531,69 +531,106 @@ function Approach() {
   );
 }
 
-/* ================= ESPECIALIDADES ================= */
-function Specialties() {
-  const items = [
-    { icon: Scale, title: "Emagrecimento saudável", text: "Redução de gordura com preservação de massa magra." },
-    { icon: Dumbbell, title: "Nutrição esportiva", text: "Performance, força e recuperação para quem treina." },
-    { icon: Stethoscope, title: "Nutrição clínica", text: "Diabetes, colesterol, hipertensão e saúde metabólica." },
-    { icon: Salad, title: "Reeducação alimentar", text: "Comportamento e relação saudável com a comida." },
-    { icon: Baby, title: "Saúde da família", text: "Crianças, gestantes e mulheres em todas as fases." },
-    { icon: Apple, title: "Nutrição funcional", text: "Intestino, hormônios, sono e energia em equilíbrio." },
-  ];
-  return (
-    <section id="especialidades" className="relative overflow-hidden py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <Reveal>
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
-                <span className="h-px w-8 bg-[color:var(--leaf)]" /> Especialidades
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <h2 className="mt-4 font-display text-4xl leading-tight text-[color:var(--moss)] sm:text-5xl lg:text-[56px] text-balance">
-                Cuidado que atravessa <em className="font-normal" style={{ color: "var(--leaf)" }}>cada fase da sua vida</em>.
-              </h2>
-            </Reveal>
-            <Reveal delay={180}>
-              <p className="mt-6 text-lg leading-relaxed text-[color:var(--moss)]/70">
-                Uma abordagem completa que se adapta ao seu momento — do primeiro passo à
-                manutenção definitiva dos seus resultados.
-              </p>
-            </Reveal>
-            <Reveal delay={260}>
-              <div className="relative mt-10 aspect-square max-w-sm overflow-hidden shadow-float"
-                   style={{ borderRadius: "58% 42% 48% 52% / 52% 45% 55% 48%" }}>
-                <img src={nutritionBowl} alt="Bowl saudável de quinoa, abacate e vegetais"
-                     className="h-full w-full object-cover" loading="lazy" width={1200} height={1408} />
-              </div>
-            </Reveal>
-          </div>
+/* ================= ESPECIALIDADES (BENTO GRID COM SPOTLIGHT) ================= */
+function BentoCard({ it, delay }: { it: any, delay: number }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-          <div className="lg:col-span-7">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {items.map((it, i) => (
-                <Reveal key={it.title} delay={i * 70}>
-                  <div className="group relative h-full overflow-hidden rounded-[24px] border border-[color:var(--moss)]/10 bg-white/80 p-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--leaf)]/40 hover:shadow-float">
-                    <div
-                      className="absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60"
-                      style={{ background: "var(--gradient-cta)" }}
-                      aria-hidden
-                    />
-                    <div className="relative">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--sage)]/30 text-[color:var(--leaf)] transition-all group-hover:bg-[color:var(--leaf)] group-hover:text-cream">
-                        <it.icon className="h-5 w-5" strokeWidth={1.8} />
-                      </div>
-                      <h3 className="mt-4 font-display text-xl text-[color:var(--moss)]">{it.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-[color:var(--moss)]/65">{it.text}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const { currentTarget, clientX, clientY } = e;
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <Reveal delay={delay} className={it.span}>
+      <motion.div
+        onMouseMove={handleMouseMove}
+        className="group relative h-full w-full overflow-hidden rounded-[32px] border border-[color:var(--moss)]/10 bg-white/40 p-8 shadow-glass transition-all duration-700 hover:-translate-y-2 hover:bg-white/60 hover:shadow-float"
+      >
+        {/* Massive Background Icon (Abstract Art) */}
+        <div className="pointer-events-none absolute -bottom-10 -right-10 opacity-[0.03] transition-all duration-1000 ease-out group-hover:-rotate-12 group-hover:scale-125 group-hover:opacity-[0.08]">
+          <it.icon className="h-[280px] w-[280px] text-[color:var(--moss)]" strokeWidth={0.5} />
+        </div>
+
+        {/* Dynamic Spotlight Glow */}
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-[32px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(
+                650px circle at ${mouseX}px ${mouseY}px,
+                rgba(101, 142, 115, 0.15),
+                transparent 40%
+              )
+            `,
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 flex h-full flex-col">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:var(--sage)]/50 text-[color:var(--leaf)] transition-colors duration-500 group-hover:bg-[color:var(--leaf)] group-hover:text-cream">
+            <it.icon className="h-7 w-7" strokeWidth={1.8} />
+          </div>
+          
+          <div className="mt-auto pt-16">
+            <h3 className="mb-3 font-display text-2xl text-[color:var(--moss)]">{it.title}</h3>
+            <p className="text-[15px] leading-relaxed text-[color:var(--moss)]/70">{it.text}</p>
           </div>
         </div>
+      </motion.div>
+    </Reveal>
+  );
+}
+
+function Specialties() {
+  const items = [
+    { span: "md:col-span-2 md:row-span-1", icon: Scale, title: "Emagrecimento saudável", text: "Redução de gordura com preservação de massa magra. Estratégias inteligentes que não te fazem passar fome nem restringir o que você ama." },
+    { span: "md:col-span-1 md:row-span-1", icon: Dumbbell, title: "Nutrição esportiva", text: "Performance, explosão de força e recuperação otimizada para quem treina pesado." },
+    { span: "md:col-span-1 md:row-span-2", icon: Stethoscope, title: "Nutrição clínica", text: "Tratamento profundo de diabetes, desbalanço de colesterol, hipertensão e foco na reparação da sua saúde metabólica como um todo." },
+    { span: "md:col-span-1 md:row-span-1", icon: Salad, title: "Reeducação alimentar", text: "Construção de comportamento e uma relação de paz com a comida." },
+    { span: "md:col-span-1 md:row-span-1", icon: Baby, title: "Saúde da família", text: "Nutrição cuidadosa para gestantes, crianças e mulheres em todas as fases." },
+    { span: "md:col-span-2 md:row-span-1", icon: Apple, title: "Nutrição funcional", text: "Regulação do seu intestino, equilíbrio de hormônios, higiene do sono e energia sustentável ao longo de todo o dia." },
+  ];
+
+  return (
+    <section id="especialidades" className="relative overflow-hidden py-24 sm:py-32">
+      {/* Artistic Background Blurs */}
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-full overflow-hidden">
+        <div className="absolute -left-[20%] top-[10%] h-[500px] w-[500px] rounded-full bg-[color:var(--sage)]/20 blur-[100px]" />
+        <div className="absolute -right-[10%] bottom-[10%] h-[600px] w-[600px] rounded-full bg-[color:var(--leaf)]/10 blur-[120px]" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8">
+        
+        {/* Centered Title Area */}
+        <div className="mx-auto max-w-3xl flex flex-col items-center text-center mb-20">
+          <Reveal>
+            <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
+              <span className="h-px w-10 bg-[color:var(--leaf)]" /> Especialidades <span className="h-px w-10 bg-[color:var(--leaf)]" />
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <h2 className="mt-6 font-display text-4xl leading-[1.05] text-[color:var(--moss)] sm:text-5xl lg:text-[56px] text-balance">
+              Cuidado que atravessa <em className="font-normal" style={{ color: "var(--leaf)" }}>cada fase da sua vida</em>.
+            </h2>
+          </Reveal>
+          <Reveal delay={180}>
+            <p className="mt-6 text-lg leading-relaxed text-[color:var(--moss)]/70 max-w-2xl text-balance">
+              Uma abordagem completa que se adapta ao seu momento — do primeiro passo à
+              manutenção definitiva dos seus resultados.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Bento Grid layout: 3 columns, 3 rows */}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:grid-rows-3 auto-rows-[1fr]">
+          {items.map((it, i) => (
+            <BentoCard key={it.title} it={it} delay={i * 100} />
+          ))}
+        </div>
+
       </div>
     </section>
   );
