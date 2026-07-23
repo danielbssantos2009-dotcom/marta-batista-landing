@@ -32,21 +32,76 @@ export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "Marta Batista — Nutricionista | Nutrição que transforma" },
+      { title: "Marta Batista — Nutricionista | Emagrecimento e Saúde da Mulher" },
       {
         name: "description",
         content:
-          "Nutrição clínica personalizada com Marta Batista: acompanhamento humano, ciência e resultados reais para uma vida mais saudável, leve e equilibrada.",
+          "Nutrição clínica e funcional personalizada com Marta Batista. Acompanhamento focado em emagrecimento sustentável, saúde da mulher, intestino e performance sem dietas restritivas.",
       },
-      { property: "og:title", content: "Marta Batista — Nutricionista" },
+      { name: "keywords", content: "Nutricionista, Emagrecimento, Nutrição Esportiva, Saúde da Mulher, Nutrição Funcional, Dieta, Nutricionista Online, Nutricionista Clínica" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { name: "author", content: "Marta Batista" },
+      { name: "theme-color", content: "#F4F7F5" },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Marta Batista Nutrição" },
+      { property: "og:title", content: "Marta Batista — Nutrição Clínica e Funcional" },
       {
         property: "og:description",
         content:
-          "Uma jornada personalizada para uma vida mais saudável, leve e equilibrada.",
+          "Resultados reais sem dietas restritivas. Especialista em emagrecimento, nutrição clínica e saúde feminina.",
       },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://martabatista.com.br" }, // Adjust with real domain
+      { property: "og:image", content: "https://martabatista.com.br/og-image.jpg" }, // Adjust with real image
+      { property: "og:locale", content: "pt_BR" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Marta Batista — Nutricionista" },
+      { name: "twitter:description", content: "Resultados reais sem dietas restritivas. Especialista em emagrecimento e nutrição clínica." },
+      { name: "format-detection", content: "telephone=no" }
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "https://martabatista.com.br" }
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "HealthAndBeautyBusiness",
+          "name": "Marta Batista Nutrição",
+          "image": "https://martabatista.com.br/og-image.jpg",
+          "@id": "https://martabatista.com.br",
+          "url": "https://martabatista.com.br",
+          "telephone": "+5500000000000",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "São Paulo",
+            "addressRegion": "SP",
+            "addressCountry": "BR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -23.55052,
+            "longitude": -46.633309
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "08:00",
+            "closes": "18:00"
+          },
+          "sameAs": [
+            "https://instagram.com/nutri.martabatista"
+          ],
+          "priceRange": "$$"
+        })
+      }
+    ]
   }),
 });
 
@@ -734,23 +789,19 @@ function Process() {
   const pendulumVariants = {
     hidden: {
       opacity: 0,
-      y: -100, // Starts falling from above
-      rotateZ: 25, // Pendulum angle
-      scaleY: 1.4, // Stretched in height
-      scaleX: 0.7, // Squeezed in width
-      transformOrigin: "top center"
+      y: 40, // Elegant slide up instead of massive drop
+      rotateZ: 3, // Subtle tilt
+      transformOrigin: "bottom center"
     },
     visible: {
       opacity: 1,
       y: 0,
       rotateZ: 0,
-      scaleY: 1,
-      scaleX: 1,
       transition: {
         type: "spring",
-        damping: 10,
-        stiffness: 120,
-        mass: 1.2,
+        damping: 20, // High damping for zero bounce jitter
+        stiffness: 80, // Soft, elegant tension
+        mass: 0.8, // Lighter mass for snappy but smooth settle
       }
     }
   };
