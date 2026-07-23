@@ -740,25 +740,45 @@ function Process() {
           viewport={{ once: true, margin: "-15%" }}
         >
           {steps.map((s, i) => (
-            <motion.div key={s.n} variants={pendulumVariants} className="group relative h-full overflow-hidden rounded-[28px] glass p-7 transition-shadow duration-500 hover:shadow-float">
-              <div
-                className="absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-30 blur-2xl transition-opacity duration-500 group-hover:opacity-60"
-                style={{ background: "var(--gradient-cta)" }}
-                aria-hidden
-              />
-              <div
-                className="font-display text-6xl leading-none"
-                style={{
-                  background: "linear-gradient(180deg, var(--leaf), color-mix(in oklab, var(--leaf) 20%, transparent))",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                }}
+            <motion.div key={s.n} variants={pendulumVariants} className="group relative h-full min-h-[380px] overflow-hidden rounded-[28px] glass transition-shadow duration-500 hover:shadow-float">
+              
+              {/* INNER IDLE ANIMATION CONTAINER */}
+              <motion.div 
+                className="relative flex h-full w-full flex-col p-7"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: i * 1.5 }}
               >
-                {s.n}
-              </div>
-              <h3 className="relative mt-4 font-display text-xl text-[color:var(--moss)]">{s.title}</h3>
-              <p className="relative mt-2 text-sm leading-relaxed text-[color:var(--moss)]/70">{s.text}</p>
+                
+                {/* IDLE GLOW PULSE */}
+                <motion.div
+                  className="absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl"
+                  style={{ background: "var(--gradient-cta)" }}
+                  animate={{ opacity: [0.2, 0.6, 0.2] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: i * 1.2 }}
+                />
+
+                {/* SLOW DRIFTING GLARE */}
+                <motion.div
+                  animate={{ left: ["-100%", "250%"] }}
+                  transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: i * 2 }}
+                  className="pointer-events-none absolute top-0 bottom-0 w-[60%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10 mix-blend-overlay"
+                />
+
+                <div
+                  className="font-display text-6xl leading-none relative z-20"
+                  style={{
+                    background: "linear-gradient(180deg, var(--leaf), color-mix(in oklab, var(--leaf) 20%, transparent))",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {s.n}
+                </div>
+                <h3 className="relative mt-auto font-display text-2xl text-[color:var(--moss)] z-20">{s.title}</h3>
+                <p className="relative mt-3 text-[15px] leading-relaxed text-[color:var(--moss)]/70 z-20">{s.text}</p>
+                
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>
