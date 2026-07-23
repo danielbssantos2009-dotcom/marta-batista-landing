@@ -1214,37 +1214,114 @@ function FinalCTA() {
   );
 }
 
-/* ================= FOOTER ================= */
+/* ================= FOOTER (SAAS GRADE) ================= */
 function Footer() {
+  const links = [
+    {
+      title: "Navegação",
+      items: [
+        { name: "Início", href: "#" },
+        { name: "Sobre Marta", href: "#sobre" },
+        { name: "A Abordagem", href: "#filosofia" },
+        { name: "Especialidades", href: "#especialidades" },
+        { name: "Como funciona", href: "#processo" },
+      ],
+    },
+    {
+      title: "Contato",
+      items: [
+        { name: "WhatsApp", href: WHATSAPP_URL },
+        { name: "Instagram", href: "https://instagram.com/nutri.martabatista" },
+        { name: "Agendar Consulta", href: WHATSAPP_URL },
+      ],
+    },
+    {
+      title: "Legal",
+      items: [
+        { name: "Termos de Uso", href: "#" },
+        { name: "Política de Privacidade", href: "#" },
+        { name: "Aviso Legal", href: "#" },
+      ],
+    },
+  ];
+
   return (
-    <footer className="relative border-t border-[color:var(--moss)]/10 py-12">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-5 sm:px-8 md:flex-row">
-        <div className="flex items-center gap-2.5">
-          <div
-            className="flex h-9 w-9 items-center justify-center rounded-full text-cream"
-            style={{ background: "var(--gradient-cta)" }}
-          >
-            <Leaf className="h-4 w-4" strokeWidth={1.8} />
-          </div>
-          <div className="leading-tight">
-            <div className="font-display text-[color:var(--moss)]">Marta Batista</div>
-            <div className="text-[11px] uppercase tracking-[0.2em] text-[color:var(--moss)]/50">
-              Nutricionista
+    <footer className="relative border-t border-[color:var(--moss)]/10 bg-white/40 pt-24 pb-8 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-4 lg:gap-8">
+          
+          {/* Column 1: Brand & Pitch */}
+          <div className="flex flex-col gap-6 lg:col-span-1">
+            <div className="flex items-center gap-3">
+              <div
+                className="flex h-11 w-11 items-center justify-center rounded-2xl text-cream shadow-sm"
+                style={{ background: "var(--gradient-cta)" }}
+              >
+                <Leaf className="h-5 w-5" strokeWidth={1.8} />
+              </div>
+              <div className="leading-tight">
+                <div className="font-display text-xl text-[color:var(--moss)] tracking-tight">Marta Batista</div>
+                <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[color:var(--moss)]/50 mt-0.5">
+                  Nutricionista
+                </div>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed text-[color:var(--moss)]/60 max-w-sm">
+              Construindo uma relação leve, sustentável e definitiva com a sua alimentação. Ciência, escuta e resultados reais.
+            </p>
+            
+            {/* Socials */}
+            <div className="flex items-center gap-3 mt-2">
+              <a 
+                href="https://instagram.com/nutri.martabatista" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--moss)]/10 text-[color:var(--moss)]/60 transition-all hover:bg-[color:var(--moss)]/5 hover:text-[color:var(--leaf)] hover:border-[color:var(--leaf)]/30"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
             </div>
           </div>
+
+          {/* Columns 2, 3, 4: Navigation Links */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-3 lg:pl-16">
+            {links.map((col) => (
+              <div key={col.title} className="flex flex-col gap-5">
+                <h4 className="text-[11px] font-bold uppercase tracking-widest text-[color:var(--moss)]/90">
+                  {col.title}
+                </h4>
+                <ul className="flex flex-col gap-3.5">
+                  {col.items.map((item) => (
+                    <li key={item.name}>
+                      <a 
+                        href={item.href} 
+                        className="text-sm text-[color:var(--moss)]/60 transition-colors hover:text-[color:var(--leaf)]"
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="text-center text-xs text-[color:var(--moss)]/60 md:text-left">
-          © {new Date().getFullYear()} Marta Batista Nutrição · Todos os direitos reservados
+
+        {/* Bottom Bar */}
+        <div className="mt-20 flex flex-col items-center justify-between gap-5 border-t border-[color:var(--moss)]/10 pt-8 sm:flex-row">
+          <div className="text-xs text-[color:var(--moss)]/50 text-center sm:text-left">
+            © {new Date().getFullYear()} Marta Batista Nutrição. Todos os direitos reservados.
+          </div>
+          
+          {/* SaaS Status Pill */}
+          <div className="flex items-center gap-2.5 rounded-full border border-[color:var(--moss)]/10 bg-white/50 px-3.5 py-1.5 text-xs font-medium text-[color:var(--moss)]/70 shadow-sm backdrop-blur-md">
+            <div className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+            </div>
+            Agenda Operacional
+          </div>
         </div>
-        <a
-          href="https://instagram.com/nutri.martabatista"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-2 rounded-full glass px-4 py-2 text-sm text-[color:var(--moss)] transition-all hover:-translate-y-0.5"
-        >
-          <Instagram className="h-4 w-4" />
-          @nutri.martabatista
-        </a>
       </div>
     </footer>
   );
