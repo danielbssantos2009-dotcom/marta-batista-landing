@@ -289,7 +289,7 @@ function Hero() {
       </div>
 
       {/* Trust marquee */}
-      <div className="relative z-10 flex w-[105%] left-1/2 -translate-x-1/2 flex-col items-center justify-center overflow-hidden py-10">
+      <div className="relative z-10 flex w-[105%] left-1/2 -translate-x-1/2 flex-col items-center justify-center overflow-hidden pt-10 pb-0">
         {/* Ribbon 1 - Left */}
         <div className="relative z-10 flex w-full flex-col border-y border-white/90 bg-white/60 py-4 shadow-[0_20px_40px_-15px_color-mix(in_oklab,var(--moss)_40%,transparent)] backdrop-blur-xl">
           <div className="marquee flex w-max items-center gap-10 whitespace-nowrap px-4 text-[11px] font-medium uppercase tracking-[0.25em] text-[color:var(--moss)]/80">
