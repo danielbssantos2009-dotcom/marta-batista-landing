@@ -745,23 +745,25 @@ function Process() {
               {/* INNER IDLE ANIMATION CONTAINER */}
               <motion.div 
                 className="relative flex h-full w-full flex-col p-7"
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: i * 1.5 }}
+                animate={{ y: [0, -4, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: i * 1.5 }}
+                style={{ willChange: "transform" }}
               >
                 
                 {/* IDLE GLOW PULSE */}
                 <motion.div
                   className="absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl"
-                  style={{ background: "var(--gradient-cta)" }}
-                  animate={{ opacity: [0.2, 0.6, 0.2] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: i * 1.2 }}
+                  style={{ background: "var(--gradient-cta)", willChange: "opacity" }}
+                  animate={{ opacity: [0.15, 0.45, 0.15] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: i * 1.2 }}
                 />
 
-                {/* SLOW DRIFTING GLARE */}
+                {/* SLOW DRIFTING GLARE (GPU ACCELERATED) */}
                 <motion.div
-                  animate={{ left: ["-100%", "250%"] }}
-                  transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: i * 2 }}
-                  className="pointer-events-none absolute top-0 bottom-0 w-[60%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10 mix-blend-overlay"
+                  animate={{ x: ["-150%", "300%"] }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: i * 2 }}
+                  style={{ willChange: "transform" }}
+                  className="pointer-events-none absolute top-0 bottom-0 left-0 w-[80%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10"
                 />
 
                 <div
