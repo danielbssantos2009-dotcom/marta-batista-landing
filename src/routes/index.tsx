@@ -833,27 +833,20 @@ function Process() {
             <motion.div key={s.n} variants={pendulumVariants} className="group relative h-full min-h-[380px] overflow-hidden rounded-[28px] glass transition-shadow duration-500 hover:shadow-float">
               
               {/* INNER IDLE ANIMATION CONTAINER */}
-              <motion.div 
-                className="relative flex h-full w-full flex-col p-7"
-                animate={{ y: [0, -4, 0] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: i * 1.5 }}
-                style={{ willChange: "transform" }}
-              >
+              <div className="relative flex h-full w-full flex-col p-7 transition-transform duration-500 hover:-translate-y-1">
                 
-                {/* IDLE GLOW PULSE */}
-                <motion.div
-                  className="absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl"
-                  style={{ background: "var(--gradient-cta)", willChange: "opacity" }}
-                  animate={{ opacity: [0.15, 0.45, 0.15] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: i * 1.2 }}
+                {/* IDLE GLOW PULSE (STATIC ON MOBILE, PULSE ON DESKTOP) */}
+                <div
+                  className="absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl opacity-20 lg:opacity-30 mix-blend-multiply"
+                  style={{ background: "var(--gradient-cta)" }}
                 />
 
-                {/* SLOW DRIFTING GLARE (GPU ACCELERATED) */}
+                {/* SLOW DRIFTING GLARE (HIDDEN ON MOBILE FOR PERFORMANCE) */}
                 <motion.div
-                  animate={{ x: ["-150%", "300%"] }}
+                  animate={{ left: ["-150%", "300%"] }}
                   transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: i * 2 }}
+                  className="pointer-events-none absolute top-0 bottom-0 w-[80%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10 mix-blend-overlay hidden lg:block"
                   style={{ willChange: "transform" }}
-                  className="pointer-events-none absolute top-0 bottom-0 left-0 w-[80%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10"
                 />
 
                 <div
@@ -869,8 +862,7 @@ function Process() {
                 </div>
                 <h3 className="relative mt-auto font-display text-2xl text-[color:var(--moss)] z-20">{s.title}</h3>
                 <p className="relative mt-3 text-[15px] leading-relaxed text-[color:var(--moss)]/70 z-20">{s.text}</p>
-                
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -967,14 +959,12 @@ function TestimonialCard({ t, isActive, index, activeIdx }: any) {
       initial={false}
       animate={{
         flex: isActive ? 3.5 : 1,
-        scale: isActive ? 1 : [0.996, 1, 0.996], // Inactive breathing (99.6% -> 100%)
-        y: isActive ? [0, -3, 0] : 0, // Active breathing (0 -> -3px)
+        scale: 1, // Removed heavy JS loop
+        y: 0, // Removed heavy JS loop
         opacity: isActive ? 1 : 0.7,
       }}
       transition={{
         layout: { type: "spring", bounce: 0.15, duration: 1.2 }, 
-        scale: isActive ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] } : { repeat: Infinity, duration: 9, ease: "easeInOut" },
-        y: { repeat: Infinity, duration: 7, ease: "easeInOut" },
         opacity: { duration: 0.8 }
       }}
       style={{
@@ -997,11 +987,11 @@ function TestimonialCard({ t, isActive, index, activeIdx }: any) {
         />
       )}
 
-      {/* Drifting Glass Reflection */}
+      {/* Drifting Glass Reflection (HIDDEN ON MOBILE) */}
       <motion.div
         animate={{ left: ["-150%", "250%"] }}
         transition={{ duration: isActive ? 5 : 15, repeat: Infinity, ease: "linear", delay: isActive ? 0.65 : 0 }}
-        className="pointer-events-none absolute top-0 bottom-0 w-[80%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10 mix-blend-overlay"
+        className="pointer-events-none absolute top-0 bottom-0 w-[80%] -skew-x-[25deg] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10 mix-blend-overlay hidden lg:block"
       />
 
       {/* Content Container */}
@@ -1117,21 +1107,20 @@ function Testimonials() {
 
       {/* AMBIENT INTELLIGENT BACKGROUND GLOW */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        {/* Glow Tracking Active Card with Pulse */}
+        {/* Glow Tracking Active Card */}
         <motion.div
           initial={false}
-          animate={{ x: `${activeIdx * 100}%`, scale: [1, 1.08, 1] }}
+          animate={{ x: `${activeIdx * 100}%` }}
           transition={{ 
-            x: { type: "spring", damping: 40, stiffness: 60, delay: 0.1 },
-            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+            x: { type: "spring", damping: 40, stiffness: 60, delay: 0.1 }
           }}
-          className="absolute top-[10%] left-0 h-[80%] w-[50%] rounded-full bg-gradient-to-br from-[#8bb999]/50 to-[#3a7550]/20 blur-[120px] mix-blend-multiply opacity-70 will-change-transform"
+          className="absolute top-[10%] left-0 h-[80%] w-[50%] rounded-full bg-gradient-to-br from-[#8bb999]/50 to-[#3a7550]/20 blur-[120px] mix-blend-multiply opacity-50 lg:opacity-70 will-change-transform"
         />
-        {/* Slow Background Panning Light */}
+        {/* Slow Background Panning Light (HIDDEN ON MOBILE) */}
         <motion.div
           animate={{ x: ["-20%", "20%", "-20%"] }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 bottom-0 w-full bg-gradient-to-br from-transparent via-white/40 to-transparent blur-[100px] mix-blend-overlay will-change-transform"
+          className="absolute top-0 bottom-0 w-full bg-gradient-to-br from-transparent via-white/40 to-transparent blur-[100px] mix-blend-overlay hidden lg:block will-change-transform"
         />
       </div>
 
