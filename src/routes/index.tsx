@@ -332,95 +332,91 @@ function Hero() {
 
 /* ================= SOBRE ================= */
 function About() {
+  const copy1 = "Sou Marta Batista, nutricionista graduada e pós-graduada em Nutrição Esportiva, Clínica e Saúde da Família. Acredito que cuidar da alimentação é cuidar de tudo o que sustenta você — sono, energia, autoestima, foco e presença.";
+  const copy2 = "Meu trabalho une evidência científica atualizada, um olhar humano para cada história e planos possíveis de sustentar por toda a vida. Nada de dietas rígidas: aqui construímos uma relação nova, leve e definitiva com a comida.";
+
+  const containerVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.05, delayChildren: 0.3 },
+    },
+  };
+
+  const wordVariant = {
+    hidden: { opacity: 0.15, filter: "blur(4px)", y: 5 },
+    visible: { 
+      opacity: 1, 
+      filter: "blur(0px)", 
+      y: 0,
+      transition: { duration: 0.8, ease: [0.2, 0.8, 0.2, 1] } 
+    },
+  };
+
   return (
-    <section id="sobre" className="relative overflow-hidden py-24 sm:py-32">
+    <section id="sobre" className="relative overflow-hidden py-24 sm:py-32 flex flex-col items-center">
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-40 top-1/3 h-[420px] w-[420px] blob opacity-40"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 blob opacity-30"
         style={{
-          background:
-            "radial-gradient(circle, color-mix(in oklab, var(--sage) 85%, transparent), transparent 70%)",
-          filter: "blur(40px)",
+          background: "radial-gradient(circle, color-mix(in oklab, var(--sage) 85%, transparent), transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center gap-12 px-5 sm:px-8">
+        
+        {/* Centralized Image */}
         <Reveal>
-          <div className="relative">
-            <div
-              className="relative aspect-[4/5] w-full overflow-hidden shadow-float"
-              style={{ borderRadius: "58% 42% 45% 55% / 40% 55% 45% 60%" }}
-            >
-              <img
-                src={martaPortrait}
-                alt="Retrato de Marta Batista, nutricionista"
-                className="h-full w-full object-cover"
-                loading="lazy"
-                width={1008}
-                height={1312}
-              />
-            </div>
-            <div className="absolute -bottom-6 -right-2 glass rounded-3xl p-5 sm:-right-6 sm:p-6">
-              <div className="flex items-center gap-4">
-                <div className="text-4xl font-display text-[color:var(--leaf)]">10+</div>
-                <div className="text-sm leading-tight text-[color:var(--moss)]/80">
-                  anos<br />de prática<br />clínica
-                </div>
-              </div>
-            </div>
-            <div
-              className="absolute -left-6 top-10 h-20 w-20 rounded-full float-slow"
-              style={{ background: "var(--gradient-cta)", opacity: 0.9 }}
-              aria-hidden
+          <div className="relative aspect-[4/5] w-[260px] sm:w-[320px] overflow-hidden shadow-float mx-auto"
+            style={{ borderRadius: "58% 42% 45% 55% / 40% 55% 45% 60%" }}>
+            <img
+              src={martaPortrait}
+              alt="Retrato de Marta Batista, nutricionista"
+              className="h-full w-full object-cover"
+              loading="lazy"
+              width={1008}
+              height={1312}
             />
           </div>
         </Reveal>
 
-        <div>
+        {/* Text Content */}
+        <div className="flex flex-col items-center">
           <Reveal>
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
-              <span className="h-px w-8 bg-[color:var(--leaf)]" />
+            <div className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
               Sobre Marta
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h2 className="mt-4 font-display text-4xl leading-tight text-[color:var(--moss)] text-balance sm:text-5xl lg:text-6xl">
+            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-[color:var(--moss)] text-balance sm:text-5xl lg:text-6xl max-w-3xl">
               Ciência, escuta e uma nutrição que{" "}
               <em className="font-normal" style={{ color: "var(--leaf)" }}>cabe na sua vida</em>.
             </h2>
           </Reveal>
-          <Reveal delay={180}>
-            <p className="mt-6 text-lg leading-relaxed text-[color:var(--moss)]/75">
-              Sou <strong className="font-medium text-[color:var(--moss)]">Marta Batista</strong>, nutricionista graduada e
-              pós-graduada em Nutrição Esportiva, Clínica e Saúde da Família. Acredito que
-              cuidar da alimentação é cuidar de tudo o que sustenta você — sono, energia,
-              autoestima, foco e presença.
-            </p>
-          </Reveal>
-          <Reveal delay={240}>
-            <p className="mt-4 text-lg leading-relaxed text-[color:var(--moss)]/75">
-              Meu trabalho une evidência científica atualizada, um olhar humano para
-              cada história e planos possíveis de sustentar por toda a vida. Nada de
-              dietas rígidas: aqui construímos uma relação nova, leve e definitiva com a comida.
-            </p>
-          </Reveal>
-          <Reveal delay={320}>
-            <div className="mt-8 grid grid-cols-2 gap-4">
-              {[
-                { k: "Pós", v: "Nutrição Esportiva" },
-                { k: "Especialista", v: "Clínica &amp; Funcional" },
-                { k: "Foco", v: "Saúde da Família" },
-                { k: "Método", v: "Personalizado e humano" },
-              ].map((it) => (
-                <div key={it.k} className="glass rounded-2xl p-4">
-                  <div className="text-[11px] uppercase tracking-widest text-[color:var(--moss)]/60">{it.k}</div>
-                  <div
-                    className="mt-1 text-sm font-medium text-[color:var(--moss)]"
-                    dangerouslySetInnerHTML={{ __html: it.v }}
-                  />
-                </div>
-              ))}
-            </div>
-          </Reveal>
+
+          {/* Staggered Word Reveal */}
+          <div className="mt-12 flex flex-col gap-8">
+            {[copy1, copy2].map((text, pIndex) => (
+              <motion.p
+                key={pIndex}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-10%" }}
+                variants={containerVariant}
+                className="text-[1.3rem] sm:text-[1.5rem] leading-[1.7] text-gray-500 font-medium max-w-3xl text-balance"
+              >
+                {text.split(" ").map((word, wIndex) => (
+                  <React.Fragment key={wIndex}>
+                    <motion.span variants={wordVariant} className="inline-block text-gray-600">
+                      {word}
+                    </motion.span>
+                    {" "}
+                  </React.Fragment>
+                ))}
+              </motion.p>
+            ))}
+          </div>
+
         </div>
       </div>
     </section>
