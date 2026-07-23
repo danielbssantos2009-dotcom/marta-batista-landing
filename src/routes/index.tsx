@@ -680,6 +680,42 @@ function Process() {
       text: "Autonomia, resultados sustentáveis e uma nova relação, definitiva, com a alimentação.",
     },
   ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.1,
+      }
+    }
+  };
+
+  const pendulumVariants = {
+    hidden: {
+      opacity: 0,
+      y: -100, // Starts falling from above
+      rotateZ: 25, // Pendulum angle
+      scaleY: 1.4, // Stretched in height
+      scaleX: 0.7, // Squeezed in width
+      transformOrigin: "top center"
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateZ: 0,
+      scaleY: 1,
+      scaleX: 1,
+      transition: {
+        type: "spring",
+        damping: 10,
+        stiffness: 120,
+        mass: 1.2,
+      }
+    }
+  };
+
   return (
     <section id="processo" className="relative overflow-hidden py-24 sm:py-32" style={{ background: "var(--gradient-soft)" }}>
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -696,32 +732,36 @@ function Process() {
           </Reveal>
         </div>
 
-        <div className="relative mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <motion.div 
+          className="relative mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-15%" }}
+        >
           {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 120}>
-              <div className="group relative h-full overflow-hidden rounded-[28px] glass p-7 transition-all duration-500 hover:-translate-y-2">
-                <div
-                  className="absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-30 blur-2xl transition-opacity duration-500 group-hover:opacity-60"
-                  style={{ background: "var(--gradient-cta)" }}
-                  aria-hidden
-                />
-                <div
-                  className="font-display text-6xl leading-none"
-                  style={{
-                    background: "linear-gradient(180deg, var(--leaf), color-mix(in oklab, var(--leaf) 20%, transparent))",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  {s.n}
-                </div>
-                <h3 className="relative mt-4 font-display text-xl text-[color:var(--moss)]">{s.title}</h3>
-                <p className="relative mt-2 text-sm leading-relaxed text-[color:var(--moss)]/70">{s.text}</p>
+            <motion.div key={s.n} variants={pendulumVariants} className="group relative h-full overflow-hidden rounded-[28px] glass p-7 transition-shadow duration-500 hover:shadow-float">
+              <div
+                className="absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-30 blur-2xl transition-opacity duration-500 group-hover:opacity-60"
+                style={{ background: "var(--gradient-cta)" }}
+                aria-hidden
+              />
+              <div
+                className="font-display text-6xl leading-none"
+                style={{
+                  background: "linear-gradient(180deg, var(--leaf), color-mix(in oklab, var(--leaf) 20%, transparent))",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                {s.n}
               </div>
-            </Reveal>
+              <h3 className="relative mt-4 font-display text-xl text-[color:var(--moss)]">{s.title}</h3>
+              <p className="relative mt-2 text-sm leading-relaxed text-[color:var(--moss)]/70">{s.text}</p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
