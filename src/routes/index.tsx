@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import React, { useEffect, useRef, useState, Fragment } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring, useMotionTemplate } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring, useMotionTemplate, useScroll } from "framer-motion";
 import {
   Leaf,
   Sparkles,
@@ -331,27 +331,32 @@ function Hero() {
 }
 
 /* ================= SOBRE ================= */
+function ScrollWord({ word, progress, range }: { word: string, progress: any, range: [number, number] }) {
+  const opacity = useTransform(progress, range, [0.15, 1]);
+  const blurRaw = useTransform(progress, range, [4, 0]);
+  const filter = useMotionTemplate`blur(${blurRaw}px)`;
+  const color = useTransform(progress, range, ["#a1a1aa", "#3f3f46"]); // gray-400 to zinc-700
+  
+  return (
+    <motion.span style={{ opacity, filter, color }} className="inline-block">
+      {word}
+    </motion.span>
+  );
+}
+
 function About() {
   const copy1 = "Sou Marta Batista, nutricionista graduada e pós-graduada em Nutrição Esportiva, Clínica e Saúde da Família. Acredito que cuidar da alimentação é cuidar de tudo o que sustenta você — sono, energia, autoestima, foco e presença.";
   const copy2 = "Meu trabalho une evidência científica atualizada, um olhar humano para cada história e planos possíveis de sustentar por toda a vida. Nada de dietas rígidas: aqui construímos uma relação nova, leve e definitiva com a comida.";
 
-  const containerVariant = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.3 },
-    },
-  };
+  const textContainer = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: textContainer,
+    offset: ["start 85%", "end 50%"]
+  });
 
-  const wordVariant = {
-    hidden: { opacity: 0.15, filter: "blur(4px)", y: 5 },
-    visible: { 
-      opacity: 1, 
-      filter: "blur(0px)", 
-      y: 0,
-      transition: { duration: 0.8, ease: [0.2, 0.8, 0.2, 1] } 
-    },
-  };
+  const words1 = copy1.split(" ");
+  const words2 = copy2.split(" ");
+  const totalWords = words1.length + words2.length;
 
   return (
     <section id="sobre" className="relative overflow-hidden py-24 sm:py-32 flex flex-col items-center">
@@ -363,61 +368,69 @@ function About() {
           filter: "blur(60px)",
         }}
       />
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center gap-12 px-5 sm:px-8">
+      
+      <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-16 px-5 sm:px-8">
         
-        {/* Centralized Image */}
-        <Reveal>
-          <div className="relative aspect-[4/5] w-[260px] sm:w-[320px] overflow-hidden shadow-float mx-auto"
-            style={{ borderRadius: "58% 42% 45% 55% / 40% 55% 45% 60%" }}>
-            <img
-              src={martaPortrait}
-              alt="Retrato de Marta Batista, nutricionista"
-              className="h-full w-full object-cover"
-              loading="lazy"
-              width={1008}
-              height={1312}
-            />
-          </div>
-        </Reveal>
-
-        {/* Text Content */}
-        <div className="flex flex-col items-center">
+        {/* Title Centered Top */}
+        <div className="flex flex-col items-center text-center">
           <Reveal>
             <div className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.28em] text-[color:var(--leaf)]">
               Sobre Marta
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-[color:var(--moss)] text-balance sm:text-5xl lg:text-6xl max-w-3xl">
+            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-[color:var(--moss)] text-balance sm:text-5xl lg:text-6xl max-w-4xl">
               Ciência, escuta e uma nutrição que{" "}
               <em className="font-normal" style={{ color: "var(--leaf)" }}>cabe na sua vida</em>.
             </h2>
           </Reveal>
-
-          {/* Staggered Word Reveal */}
-          <div className="mt-12 flex flex-col gap-8">
-            {[copy1, copy2].map((text, pIndex) => (
-              <motion.p
-                key={pIndex}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-10%" }}
-                variants={containerVariant}
-                className="text-[1.3rem] sm:text-[1.5rem] leading-[1.7] text-gray-500 font-medium max-w-3xl text-balance"
-              >
-                {text.split(" ").map((word, wIndex) => (
-                  <Fragment key={wIndex}>
-                    <motion.span variants={wordVariant} className="inline-block text-gray-600">
-                      {word}
-                    </motion.span>
-                    {" "}
-                  </Fragment>
-                ))}
-              </motion.p>
-            ))}
-          </div>
-
         </div>
+
+        {/* Content Split (Image Left, Text Right) */}
+        <div className="grid w-full grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-16">
+          {/* Image Left */}
+          <Reveal>
+            <div className="relative aspect-[4/5] w-full max-w-[380px] overflow-hidden shadow-float mx-auto lg:ml-auto"
+              style={{ borderRadius: "58% 42% 45% 55% / 40% 55% 45% 60%" }}>
+              <img
+                src={martaPortrait}
+                alt="Retrato de Marta Batista, nutricionista"
+                className="h-full w-full object-cover"
+                loading="lazy"
+                width={1008}
+                height={1312}
+              />
+            </div>
+          </Reveal>
+
+          {/* Text Right (Scroll Revealed) */}
+          <div ref={textContainer} className="flex flex-col gap-8 text-left lg:pr-8">
+            <p className="text-[1.25rem] sm:text-[1.4rem] leading-[1.7] font-medium text-balance">
+              {words1.map((word, i) => {
+                const start = i / totalWords;
+                const end = start + (1 / totalWords);
+                return (
+                  <Fragment key={i}>
+                    <ScrollWord word={word} progress={scrollYProgress} range={[start, end]} />{" "}
+                  </Fragment>
+                );
+              })}
+            </p>
+            <p className="text-[1.25rem] sm:text-[1.4rem] leading-[1.7] font-medium text-balance">
+              {words2.map((word, i) => {
+                const offset = words1.length;
+                const start = (i + offset) / totalWords;
+                const end = start + (1 / totalWords);
+                return (
+                  <Fragment key={i}>
+                    <ScrollWord word={word} progress={scrollYProgress} range={[start, end]} />{" "}
+                  </Fragment>
+                );
+              })}
+            </p>
+          </div>
+        </div>
+
       </div>
     </section>
   );
