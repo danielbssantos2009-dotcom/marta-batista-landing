@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, Fragment } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring, useMotionTemplate } from "framer-motion";
 import {
   Leaf,
@@ -406,12 +406,12 @@ function About() {
                 className="text-[1.3rem] sm:text-[1.5rem] leading-[1.7] text-gray-500 font-medium max-w-3xl text-balance"
               >
                 {text.split(" ").map((word, wIndex) => (
-                  <React.Fragment key={wIndex}>
+                  <Fragment key={wIndex}>
                     <motion.span variants={wordVariant} className="inline-block text-gray-600">
                       {word}
                     </motion.span>
                     {" "}
-                  </React.Fragment>
+                  </Fragment>
                 ))}
               </motion.p>
             ))}
